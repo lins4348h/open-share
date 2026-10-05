@@ -1,0 +1,2054 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>老師，在嗎？</title>
+<meta name="description" content="引路人・教師職場情境遊戲。下班了，手機還在響：選一個人，走完 6 回合，每則回覆只有 20 秒。顧對方、顧自己、守原則，每種回法都有代價。玩完看八面玲瓏範本。">
+<meta property="og:title" content="老師，在嗎？｜引路人教師職場情境遊戲">
+<meta property="og:description" content="下班了，手機還在響。6 回合、每則 20 秒，你會怎麼回？">
+<meta name="theme-color" content="#2a1d16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* 版面：「檯燈下的晚上」。首頁＝奶茶米白底、琥珀檯燈光、焦糖棕文字；遊戲＝暗焦糖色房間裡一支被檯燈照亮的手機。
+   按鈕一律膠囊形：主要＝琥珀實心＋柔和陰影，次要＝奶茶色外框；同一畫面只有一個主要按鈕。 */
+:root{
+  --cream:#f7eee2; --cream2:#f0e3d1; --paper:#fffaf3; --line:#e9d8c2; --tea:#d2b393; --tea-l:#e8d5bf;
+  --ink:#4a3326; --ink2:#7a5d49; --ink3:#a88d77;
+  --amber:#e9862c; --amber-d:#c96d18; --amber-l:#ffe6c8; --amber-ll:#fff3e3;
+  --night:#2a1d16; --night2:#3b2a20;
+  --do:#c8604f; --do-l:#f9e1db; --ds:#5f8a55; --ds-l:#e3eedb; --dp:#4f72a0; --dp-l:#e0e8f3;
+  --chat:#ead8c0; --out:#ffcb8c;
+  --display:"LXGW WenKai TC","Kaiti TC","STKaiti","BiauKai",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.3}
+p{text-wrap:pretty}
+a{color:var(--amber-d)}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+:focus-visible{outline:3px solid rgba(233,134,44,.55);outline-offset:3px;border-radius:12px}
+.shell{max-width:1080px;margin:0 auto;padding-inline:16px}
+@media(min-width:720px){.shell{padding-inline:28px}}
+body.playing{overflow:hidden}
+body.playing #site{display:none}
+
+/* ===== 按鈕（膠囊） ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:12px 26px;border-radius:999px;font-weight:700;font-size:16px;letter-spacing:.5px;text-align:center;line-height:1.3;transition:transform .16s var(--ease),box-shadow .2s,background .2s,border-color .2s;user-select:none}
+.btn svg{width:19px;height:19px;flex:none;stroke:currentColor}
+.btn:active{transform:scale(.95)}
+.btn-pri{background:var(--amber);color:#fff;box-shadow:0 8px 18px -4px rgba(233,134,44,.55),inset 0 -3px 0 rgba(120,60,10,.14)}
+.btn-pri:hover{background:#ee8f37;transform:translateY(-1px);box-shadow:0 12px 22px -4px rgba(233,134,44,.6),inset 0 -3px 0 rgba(120,60,10,.14)}
+.btn-pri:active{transform:scale(.95)}
+.btn-sec{background:var(--paper);color:var(--ink);border:2px solid var(--tea)}
+.btn-sec:hover{background:var(--amber-ll);border-color:var(--amber)}
+.btn[disabled]{opacity:.5;cursor:not-allowed;box-shadow:none;transform:none}
+.btn-text{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:6px 14px;border-radius:999px;font-weight:700;font-size:15px;color:var(--ink2)}
+.btn-text:hover{color:var(--amber-d);background:rgba(233,134,44,.08)}
+.btn-text svg{width:16px;height:16px;stroke:currentColor}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row2 .btn{padding-inline:12px}
+@media(max-width:420px){.row2 .btn{font-size:15px;letter-spacing:0}}
+.btn.pop{animation:pop .4s var(--ease)}
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(.93)}70%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+/* ===== 頂欄（固定） ===== */
+.topbar{position:sticky;top:0;z-index:30;background:rgba(247,238,226,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topbar .shell{display:flex;align-items:center;gap:12px;min-height:62px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:1px;color:var(--ink)}
+.logo i{width:34px;height:34px;border-radius:12px;background:var(--amber);display:grid;place-items:center;flex:none;position:relative;box-shadow:0 4px 10px -2px rgba(233,134,44,.5)}
+.logo i svg{width:18px;height:18px;stroke:#fff}
+.logo i::after{content:"";position:absolute;top:-3px;right:-3px;width:11px;height:11px;border-radius:50%;background:var(--do);border:2px solid var(--cream)}
+
+/* ===== Hero ===== */
+.hero{position:relative;overflow:hidden;padding-block:clamp(28px,4.5vw,56px) clamp(32px,5vw,60px)}
+.hero::before{content:"";position:absolute;left:-180px;top:-240px;width:760px;height:760px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,184,104,.55),rgba(255,184,104,0));pointer-events:none}
+.hero-grid{position:relative;display:grid;gap:44px;align-items:center}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr;gap:56px}}
+.eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--amber-d)}
+.hero h1{font-family:var(--display);font-size:clamp(50px,7vw,80px);font-weight:700;letter-spacing:4px;line-height:1.1;margin:10px 0 14px;color:var(--ink);white-space:nowrap}
+.hero h1 span{color:var(--amber)}
+.hero .lead{font-size:clamp(18px,2.3vw,21px);font-weight:500;max-width:24em}
+.hero .lead2{color:var(--ink2);margin-top:10px;max-width:29em}
+.dirs{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.dchip{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;border-radius:999px;padding:3px 12px;line-height:1.6}
+.dchip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.dchip.o{background:var(--do-l);color:var(--do)}
+.dchip.s{background:var(--ds-l);color:var(--ds)}
+.dchip.p{background:var(--dp-l);color:var(--dp)}
+.sound-hint{display:inline-flex;align-items:center;gap:10px;margin-top:14px;font-size:14px;color:var(--ink2);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:7px 16px}
+.sound-hint svg{width:19px;height:19px;stroke:var(--amber);flex:none}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+
+/* 鎖定畫面（檯燈下的手機） */
+.lock{justify-self:center;width:min(350px,100%);aspect-ratio:9/16;max-height:610px;border-radius:46px;padding:10px;background:#20160f;box-shadow:0 34px 70px -20px rgba(74,51,38,.55),0 0 0 1px rgba(0,0,0,.05)}
+.lock-in{position:relative;height:100%;border-radius:38px;overflow:hidden;background:radial-gradient(110% 65% at 25% 0%,#f3a457 0%,#8c4f2a 38%,#3a2418 72%,#24170f 100%);padding:46px 14px 18px;display:flex;flex-direction:column}
+.lock-time{text-align:center;font-family:var(--mono);font-weight:500;font-size:58px;letter-spacing:2px;color:#fff8ef;line-height:1}
+.lock-date{text-align:center;color:rgba(255,248,239,.8);font-size:14px;margin-top:6px}
+.notes{margin-top:auto;display:grid;gap:8px}
+.note{display:flex;gap:10px;align-items:flex-start;background:rgba(255,246,234,.2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;padding:10px 12px;animation:noteIn .6s var(--ease) both}
+.note:nth-child(2){animation-delay:.9s}.note:nth-child(3){animation-delay:1.8s}.note:nth-child(4){animation-delay:2.7s}
+@keyframes noteIn{from{opacity:0;transform:translateY(-14px) scale(.98)}to{opacity:1;transform:none}}
+.note .av{width:34px;height:34px;border-radius:12px;background:rgba(255,246,234,.25);display:grid;place-items:center;font-size:19px;flex:none;line-height:1}
+.note .tx{min-width:0;flex:1}
+.note .row{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:rgba(255,248,239,.75)}
+.note .row b{color:#fff;font-size:13.5px}
+.note p{font-size:13.5px;color:#fff;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note.miss p{color:#ffd0c4}
+
+/* ===== 區塊 ===== */
+.sec{padding-block:clamp(40px,6vw,72px)}
+.sec-head{max-width:640px;margin-bottom:26px}
+.sec-head h2{font-family:var(--display);font-size:clamp(30px,4.4vw,42px);margin-top:6px}
+.sec-head p{color:var(--ink2);margin-top:8px}
+.cards{display:grid;gap:16px}
+@media(min-width:900px){.cards{grid-template-columns:repeat(3,1fr)}}
+.who{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:22px 20px 18px;box-shadow:0 14px 30px -22px rgba(74,51,38,.5);transition:transform .25s var(--ease),box-shadow .25s}
+.who:not(.wip):hover{transform:translateY(-3px);box-shadow:0 20px 36px -22px rgba(74,51,38,.55)}
+.who .top{display:flex;align-items:center;gap:12px}
+.who .av{width:50px;height:50px;border-radius:18px;background:var(--amber-l);display:grid;place-items:center;font-size:27px;line-height:1;flex:none}
+.who .role{font-size:13px;font-weight:700;color:var(--amber-d);letter-spacing:1px}
+.who .nm{display:block;font-weight:700;font-size:17px;line-height:1.35}
+.who .time{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--ink3)}
+.who h3{font-family:var(--display);font-size:25px;margin:16px 0 10px}
+.who .bubble{align-self:flex-start;max-width:100%;background:var(--chat);border-radius:18px 18px 18px 6px;padding:8px 14px;font-size:14.5px;line-height:1.55}
+.who .teaser{color:var(--ink2);font-size:15px;margin-top:12px;flex:1}
+.who .acts{display:grid;gap:6px;margin-top:18px}
+.who .acts .btn{width:100%}
+.who .acts .btn-text{justify-self:center}
+.who.wip{background:rgba(255,250,243,.6)}
+.who.wip .av,.who.wip h3,.who.wip .bubble{opacity:.6}
+.who .wip-tag{position:absolute;top:18px;right:18px;font-size:12.5px;font-weight:700;color:var(--ink2);background:var(--cream2);border-radius:999px;padding:2px 12px}
+.who.wip .time{display:none}
+.how{margin-top:20px;background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:16px 18px 14px;max-width:34em}
+.how-t{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--amber-d)}
+.steps{list-style:none;counter-reset:st;display:grid;gap:12px;margin-top:8px}
+.steps li{position:relative;padding-left:44px}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:1px;width:30px;height:30px;border-radius:50%;background:var(--amber-l);color:var(--amber-d);display:grid;place-items:center;font-family:var(--mono);font-weight:500;font-size:14px}
+.steps b{font-size:16px}
+.steps p{color:var(--ink2);font-size:14.5px;line-height:1.65}
+.steps .dirs{margin-top:6px}
+.btn.big{min-height:60px;font-size:18.5px;padding:14px 34px}
+.btn.big svg{width:21px;height:21px}
+@media(max-width:600px){.hero-cta .btn.big{width:100%}.hero h1{font-size:clamp(40px,12vw,54px);letter-spacing:2px}}
+.pick{padding-top:clamp(20px,4vw,40px)}
+.back-link{margin-left:-14px;margin-bottom:6px}
+.foot{border-top:1px solid var(--line);padding-block:26px calc(26px + env(safe-area-inset-bottom,0px));font-size:14px;color:var(--ink2)}
+.foot .shell{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+.foot a{color:var(--ink);font-weight:700;text-decoration:none}
+.foot a:hover{color:var(--amber-d)}
+
+/* ===== 遊戲舞台 ===== */
+#stage:empty{display:none}
+#stage{position:fixed;inset:0;z-index:40;background:radial-gradient(70% 55% at 50% -5%,rgba(255,168,84,.38),rgba(255,168,84,0) 70%),linear-gradient(180deg,#3a281d,#21160f);display:flex;flex-direction:column;align-items:center;overflow:hidden}
+
+/* 背景卡 */
+.bgcard{flex:1;min-height:0;width:100%;display:flex;flex-direction:column;overflow-y:auto;padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.bg-in{margin:auto;width:min(460px,100%);background:var(--paper);border-radius:32px;padding:30px 26px 26px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04);position:relative;overflow:hidden}
+.bg-in::before{content:"";position:absolute;left:50%;top:-140px;width:360px;height:260px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,184,104,.5),rgba(255,184,104,0));pointer-events:none}
+.bg-in .when{position:relative;display:inline-block;font-size:13px;font-weight:700;letter-spacing:2px;color:var(--amber-d);background:var(--amber-l);border-radius:999px;padding:3px 12px;margin-bottom:16px}
+.bg-in p{position:relative;font-family:var(--display);font-size:clamp(19px,2.6vw,22px);line-height:1.75;opacity:0;animation:fadeUp .7s var(--ease) both}
+.bg-in .gap{display:block;height:16px}
+.bg-in p.last{font-weight:700;color:var(--amber-d);margin-top:6px}
+.bg-in .rule{position:relative;display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:20px;padding-top:16px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink2);opacity:0;animation:fadeUp .6s var(--ease) both}
+.bg-in .rule span{display:inline-flex;align-items:center;gap:6px}
+.bg-in .rule svg{width:16px;height:16px;stroke:var(--amber)}
+.bg-in .go{position:relative;width:100%;margin-top:18px;opacity:0;animation:fadeUp .6s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* HUD：離開／回合／聲音 */
+.hud{width:min(460px,100%);flex:none;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;color:#fff3e3}
+.hbtn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:999px;background:rgba(255,243,227,.12);border:1px solid rgba(255,243,227,.18);font-size:14px;font-weight:700;color:#fff3e3;transition:background .2s}
+.hbtn:hover{background:rgba(255,243,227,.2)}
+.hbtn svg{width:17px;height:17px;stroke:currentColor}
+.hbtn.icon{width:38px;padding:0;justify-content:center}
+.rounds{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.rdots{display:flex;gap:6px}
+.rdots i{width:9px;height:9px;border-radius:50%;background:rgba(255,243,227,.22);transition:background .3s,transform .3s}
+.rdots i.done{background:var(--amber)}
+.rdots i.cur{background:#fff3e3;transform:scale(1.25);box-shadow:0 0 0 3px rgba(233,134,44,.5)}
+.rtxt{font-size:13px;font-weight:700;letter-spacing:1px;color:rgba(255,243,227,.85)}
+
+/* 手機 */
+.phone{--ph:calc(100dvh - 92px);height:min(var(--ph),920px);width:min(calc(min(var(--ph),920px) * .49),460px);flex:none;border-radius:48px;padding:10px;background:#160f0a;box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06),0 0 120px -40px rgba(255,170,80,.45)}
+.phone.buzz{animation:buzz .32s linear}
+@keyframes buzz{0%,100%{transform:none}20%{transform:translateX(-3px) rotate(-.4deg)}40%{transform:translateX(3px) rotate(.4deg)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+.screen{position:relative;height:100%;border-radius:39px;overflow:hidden;background:var(--chat);display:flex;flex-direction:column}
+.sbar{flex:none;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:10px 24px 4px;font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.sbar .ic{display:flex;gap:5px}
+.sbar svg{width:15px;height:15px;stroke:var(--ink)}
+.chead{flex:none;display:flex;align-items:center;gap:10px;padding:6px 12px 10px;background:var(--paper);border-bottom:1px solid var(--line)}
+.back{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;transition:background .2s}
+.back:hover{background:rgba(74,51,38,.06)}
+.back svg{width:24px;height:24px;stroke:var(--ink)}
+.back .bdot{position:absolute;top:3px;right:1px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#e5483b;color:#fff;font-size:11.5px;font-weight:700;line-height:19px;text-align:center;border:2px solid var(--paper)}
+.back .bdot[hidden]{display:none}
+.chead .av{width:38px;height:38px;border-radius:50%;background:var(--amber-l);display:grid;place-items:center;font-size:21px;line-height:1;flex:none}
+.chead .nm{display:flex;flex-direction:column;min-width:0;line-height:1.3}
+.chead .nm b{font-size:16px}
+.chead .nm small{font-size:12px;color:var(--ink3)}
+.feeds{position:relative;flex:1;min-height:0}
+.feed{position:absolute;inset:0;overflow-y:auto;padding:14px 12px 18px;scroll-behavior:smooth;overscroll-behavior:contain}
+.feed[hidden]{display:none}
+
+/* 訊息 */
+.m{display:flex;align-items:flex-end;gap:8px;margin-top:10px;animation:msgIn .28s var(--ease) both}
+.m.cont{margin-top:4px}
+.m.cont .mav{visibility:hidden}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.mav{width:32px;height:32px;border-radius:50%;background:var(--amber-l);display:grid;place-items:center;font-size:18px;line-height:1;flex:none}
+.mb{display:flex;flex-direction:column;min-width:0;max-width:78%}
+.mb .row{display:flex;align-items:flex-end;gap:6px}
+.snd{font-size:12px;font-weight:700;color:var(--ink2);margin:0 0 3px 4px}
+.b{background:#fff;border-radius:20px 20px 20px 6px;padding:9px 14px;font-size:15.5px;line-height:1.6;box-shadow:0 1px 2px rgba(74,51,38,.08);word-break:break-word}
+.m.cont .b{border-radius:20px}
+.tm{font-size:11px;color:var(--ink3);font-family:var(--mono);flex:none;padding-bottom:2px}
+.m.out{justify-content:flex-end}
+.m.out .mb{align-items:flex-end}
+.m.out .row{flex-direction:row-reverse}
+.m.out .b{background:var(--out);border-radius:20px 20px 6px 20px}
+.read{font-size:11px;color:var(--ink3);margin-top:2px}
+.read[hidden]{display:none}
+.b.unsent{background:transparent;box-shadow:none;border:1px dashed var(--tea);color:var(--ink3);font-size:13.5px}
+.typing{display:flex;gap:4px;background:#fff;border-radius:20px 20px 20px 6px;padding:13px 15px;box-shadow:0 1px 2px rgba(74,51,38,.08)}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--ink3);animation:dot 1.1s infinite}
+.typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+.sys,.div{display:block;width:fit-content;margin:14px auto 4px;font-size:12px;color:var(--ink2);background:rgba(74,51,38,.1);border-radius:999px;padding:3px 12px;text-align:center}
+.act{margin:12px auto 4px;max-width:86%;text-align:center;font-size:13.5px;color:var(--ink2);font-style:italic}
+.call-log{display:flex;align-items:center;gap:8px;width:fit-content;margin:14px auto 4px;font-size:13px;color:var(--ink);background:#fff;border-radius:999px;padding:5px 14px;box-shadow:0 1px 2px rgba(74,51,38,.08)}
+.call-log svg{width:16px;height:16px;stroke:var(--ds)}
+.call-log.miss{color:#c2412f}
+.call-log.miss svg{stroke:#c2412f}
+.voice{display:flex;align-items:center;gap:10px;min-width:170px}
+.voice .play{width:34px;height:34px;border-radius:50%;background:var(--amber);display:grid;place-items:center;flex:none;box-shadow:0 3px 8px -2px rgba(233,134,44,.6)}
+.voice .play svg{width:15px;height:15px;fill:#fff;margin-left:2px}
+.voice .wave{display:flex;align-items:center;gap:2px;height:24px;flex:1}
+.voice .wave i{width:3px;border-radius:2px;background:var(--tea)}
+.voice.playing .wave i{background:var(--amber);animation:wv .9s infinite ease-in-out}
+.voice.playing .wave i:nth-child(3n){animation-delay:.2s}.voice.playing .wave i:nth-child(3n+1){animation-delay:.4s}
+@keyframes wv{50%{transform:scaleY(.4)}}
+.voice .d{font-family:var(--mono);font-size:12px;color:var(--ink3)}
+.vhint{font-size:11.5px;color:var(--amber-d);margin-top:4px;font-weight:700}
+.vtext{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink2);line-height:1.6}
+.vtext[hidden]{display:none}
+
+/* 通知橫幅（另一個視窗）：深焦糖底＋琥珀，跟聊天區明顯區隔 */
+.banner{position:absolute;left:10px;right:10px;top:8px;z-index:15;display:flex;align-items:center;gap:10px;text-align:left;background:#3b2a20;border:1px solid rgba(255,190,120,.35);color:#fff3e3;border-radius:22px;padding:10px 12px;box-shadow:0 16px 30px -10px rgba(33,22,15,.6);animation:bnIn .35s var(--ease) both;cursor:pointer}
+.banner .av{width:36px;height:36px;border-radius:12px;background:rgba(255,243,227,.14);display:grid;place-items:center;font-size:20px;line-height:1;flex:none}
+.banner .tx{flex:1;min-width:0;line-height:1.4}
+.banner .tx b{display:block;font-size:14px;color:#ffcf94}
+.banner .tx span{display:block;font-size:13.5px;color:rgba(255,243,227,.88);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.banner .open{flex:none;font-size:12.5px;font-weight:700;color:#fff;background:var(--amber);border-radius:999px;padding:4px 12px}
+.banner.sticky{animation:bnIn .35s var(--ease) both,glow 1.6s ease-in-out infinite .4s}
+@keyframes bnIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(233,134,44,.0),0 16px 30px -10px rgba(33,22,15,.6)}50%{box-shadow:0 0 0 5px rgba(233,134,44,.45),0 16px 30px -10px rgba(33,22,15,.6)}}
+
+/* 對話列表 */
+.clist{position:absolute;left:0;right:0;bottom:0;top:0;z-index:17;background:var(--chat);display:flex;flex-direction:column;animation:fadeIn .2s both}
+.clist[hidden]{display:none}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.clist .ch{display:flex;align-items:center;gap:8px;padding:44px 16px 12px;border-bottom:1px solid var(--line)}
+.clist .ch b{font-size:20px;font-family:var(--display)}
+.clist .ch .x{margin-left:auto}
+.crow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);transition:background .2s}
+.crow:hover{background:rgba(74,51,38,.04)}
+.crow .av{width:46px;height:46px;border-radius:50%;background:var(--amber-l);display:grid;place-items:center;font-size:24px;line-height:1;flex:none}
+.crow .tx{flex:1;min-width:0;line-height:1.45}
+.crow .tx b{display:block;font-size:15.5px}
+.crow .tx span{display:block;font-size:13.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crow .rt{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.crow .rt i{font-style:normal;min-width:20px;height:20px;border-radius:999px;background:#e5483b;color:#fff;font-family:var(--sans);font-size:11.5px;font-weight:700;line-height:20px;text-align:center;padding:0 6px}
+
+/* 輸入區 */
+.comp{flex:none;background:var(--paper);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:9px}
+.tmr{display:flex;align-items:center;gap:10px}
+.tmr[hidden]{display:none}
+.tmr .lb{font-size:12px;font-weight:700;color:var(--ink2);flex:none}
+.tb{flex:1;height:10px;border-radius:999px;background:var(--cream2);overflow:hidden}
+.tb i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#f0a24f,var(--amber));transform-origin:left;transition:transform .1s linear}
+.tmr b{font-family:var(--mono);font-weight:500;font-size:15px;min-width:24px;text-align:right;color:var(--ink)}
+.tmr.hot .tb i{background:linear-gradient(90deg,#e6735e,var(--do))}
+.tmr.hot b{color:var(--do)}
+.opts{display:flex;flex-direction:column;gap:8px;max-height:min(48vh,380px);overflow-y:auto;padding:2px}
+.opts[hidden]{display:none}
+.opt{text-align:left;background:#fff;border:2px solid var(--tea-l);border-radius:22px;padding:12px 16px;font-size:15.5px;line-height:1.6;color:var(--ink);box-shadow:0 3px 0 var(--line);transition:transform .14s var(--ease),border-color .2s,box-shadow .14s;animation:optIn .3s var(--ease) both}
+.opt:nth-child(2){animation-delay:.06s}.opt:nth-child(3){animation-delay:.12s}
+.opt:hover{border-color:var(--amber)}
+.opt:active{transform:translateY(2px) scale(.985);box-shadow:0 1px 0 var(--line)}
+@keyframes optIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.waitbar{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#3b2a20;border:2px solid var(--amber);border-radius:22px;padding:11px 12px 11px 14px;font-size:15px;color:#fff3e3;animation:glow 1.6s ease-in-out infinite}
+.waitbar .av{font-size:22px;line-height:1}
+.waitbar .wt{flex:1;min-width:0}
+.waitbar b{color:#ffcf94}
+.waitbar .open{flex:none;font-size:13px;font-weight:700;color:#fff;background:var(--amber);border-radius:999px;padding:4px 12px}
+.inbar{display:flex;align-items:center;gap:8px}
+.inbox{flex:1;min-height:42px;max-height:96px;overflow:hidden;border-radius:21px;background:var(--cream);padding:9px 16px;font-size:15px;line-height:1.55;color:var(--ink)}
+.inbox .ph{color:var(--ink3)}
+.caret{display:inline-block;width:2px;height:1.05em;background:var(--amber);vertical-align:-2px;margin-left:1px;animation:blink .9s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.send{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--cream2);flex:none;transition:background .2s}
+.send svg{width:20px;height:20px;stroke:var(--ink3)}
+.send.on{background:var(--amber)}
+.send.on svg{stroke:#fff}
+
+/* 來電 */
+.callov{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;padding:56px 18px calc(22px + env(safe-area-inset-bottom,0px));color:#fff3e3;background:radial-gradient(90% 50% at 50% 0%,rgba(255,170,80,.35),rgba(255,170,80,0)),linear-gradient(180deg,#4a3223,#1f150e);animation:fadeIn .3s both;overflow-y:auto}
+.callov.bye{animation:fadeOut .45s both}
+@keyframes fadeOut{to{opacity:0}}
+.cst{font-size:14px;color:rgba(255,243,227,.75);letter-spacing:1px}
+.cst b{font-family:var(--mono);font-weight:500;color:#fff3e3}
+.cav{width:96px;height:96px;border-radius:50%;background:rgba(255,243,227,.14);display:grid;place-items:center;font-size:52px;line-height:1;margin-top:18px;flex:none}
+.callov.ringing .cav{animation:ring 1.2s infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,184,104,.55)}100%{box-shadow:0 0 0 26px rgba(255,184,104,0)}}
+.cnm{font-family:var(--display);font-size:27px;font-weight:700;margin-top:12px}
+.csub{font-size:13px;color:rgba(255,243,227,.6)}
+.hint{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#ffd9ad;background:rgba(255,243,227,.1);border-radius:999px;padding:4px 12px}
+.hint svg{width:16px;height:16px;stroke:currentColor}
+.ringleft{margin-top:8px;font-family:var(--mono);font-size:13px;color:rgba(255,243,227,.6)}
+.cap{width:100%;margin-top:18px;display:flex;flex-direction:column;gap:8px}
+.cap p{font-size:16.5px;line-height:1.65;text-align:center;animation:fadeUp .35s both}
+.cap p.old{opacity:.42;font-size:14.5px}
+.cap p.me{color:#ffd9ad}
+.cbox{width:100%;margin-top:auto;padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.cbox .tmr .tb{background:rgba(255,243,227,.15)}
+.cbox .tmr b{color:#fff3e3}
+.cbox .tmr .lb{color:rgba(255,243,227,.75)}
+.copt{text-align:left;background:rgba(255,243,227,.12);border:2px solid rgba(255,243,227,.22);border-radius:22px;padding:11px 15px;font-size:15px;line-height:1.55;color:#fff3e3;transition:background .2s,transform .14s;animation:optIn .3s var(--ease) both}
+.copt:hover{background:rgba(255,243,227,.2);border-color:#ffb46a}
+.copt:active{transform:scale(.985)}
+.cbtns{display:flex;justify-content:space-around;width:100%;margin-top:auto;padding-top:18px}
+.cbtns:empty{display:none}
+.cbtn{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13.5px;color:#fff3e3}
+.cbtn i{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;transition:transform .15s}
+.cbtn:active i{transform:scale(.92)}
+.cbtn i svg{width:30px;height:30px;stroke:#fff}
+.cbtn.no i{background:#d4483a}
+.cbtn.no i svg{transform:rotate(135deg)}
+.cbtn.yes i{background:#4f9b5b;animation:bounce 1.2s infinite}
+@keyframes bounce{0%,100%{transform:none}50%{transform:translateY(-5px)}}
+
+/* 對話框 */
+.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:rgba(33,22,15,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:fadeIn .2s both}
+.modal .box{width:min(400px,100%);background:var(--paper);border-radius:28px;padding:26px 22px 20px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);animation:popIn .3s var(--ease) both}
+@keyframes popIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}
+.modal h3{font-family:var(--display);font-size:24px}
+.modal p{color:var(--ink2);margin:8px 0 20px;font-size:15px}
+.modal .row2 .btn,.modal .one{width:100%}
+
+/* 結局卡 */
+.endov{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(33,22,15,.6);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);animation:fadeIn .4s both;overflow-y:auto}
+.endcard{width:min(460px,100%);background:var(--paper);border-radius:32px;padding:28px 22px 18px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7);position:relative;overflow:hidden;animation:popIn .45s var(--ease) both}
+.endcard::before{content:"";position:absolute;left:50%;top:-150px;width:380px;height:280px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,184,104,.5),rgba(255,184,104,0));pointer-events:none}
+.ek{position:relative;display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:2px;color:var(--amber-d);background:var(--amber-l);border-radius:999px;padding:3px 12px}
+.ek.hid{color:#fff;background:linear-gradient(90deg,var(--do),var(--amber),var(--ds),var(--dp))}
+.endcard h2{position:relative;font-family:var(--display);font-size:clamp(30px,6vw,36px);margin:12px 0 10px}
+.endcard .epi{position:relative;font-size:15.5px;line-height:1.85;color:var(--ink)}
+.tend{position:relative;margin-top:18px;background:var(--cream);border-radius:20px;padding:14px 16px}
+.tend h4{font-size:13px;color:var(--ink2);margin-bottom:8px;font-weight:700;letter-spacing:1px}
+.trow{display:grid;grid-template-columns:4em 1fr 1.6em;align-items:center;gap:10px;font-size:14px;font-weight:700;margin-top:6px}
+.trow .bar{height:10px;border-radius:999px;background:rgba(74,51,38,.08);overflow:hidden}
+.trow .bar i{display:block;height:100%;border-radius:999px;transform-origin:left;animation:grow .9s var(--ease) both .3s}
+@keyframes grow{from{transform:scaleX(0)}}
+.trow.o{color:var(--do)}.trow.o .bar i{background:var(--do)}
+.trow.s{color:var(--ds)}.trow.s .bar i{background:var(--ds)}
+.trow.p{color:var(--dp)}.trow.p .bar i{background:var(--dp)}
+.trow em{font-style:normal;font-family:var(--mono);text-align:right;color:var(--ink)}
+.end-acts{position:relative;display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.end-acts .btn{width:100%}
+.end-acts .btn-text{align-self:center}
+@media(max-width:600px){
+  .end-acts .btn-pri{order:2}
+  .end-acts .row2{order:1}
+  .end-acts .btn-text{order:3}
+}
+
+/* 圖卡 */
+.cardov{position:fixed;inset:0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;background:rgba(33,22,15,.88);animation:fadeIn .25s both}
+.cardov img{max-height:68vh;max-width:100%;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.cardov p{color:#fff3e3;font-size:14px;text-align:center}
+.cardov .row2{width:min(380px,100%)}
+.cardov .btn{width:100%}
+
+.toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);z-index:100;background:var(--night);color:#fff3e3;border-radius:999px;padding:9px 18px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 八面玲瓏範本頁（一回合一頁） ===== */
+.tpl-wrap{max-width:820px}
+.tpl-top{position:sticky;top:calc(62px + env(safe-area-inset-top,0px));z-index:20;background:rgba(247,238,226,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:8px 0 12px}
+.tpl-ttl{display:flex;align-items:center;flex-wrap:wrap;gap:2px 12px}
+.tpl-ttl .back-link{margin-bottom:0}
+.tpl-ttl .eyebrow{font-size:12px;letter-spacing:2px}
+.tpl-ttl h1{font-family:var(--display);font-size:clamp(22px,4vw,30px);line-height:1.2}
+.tsteps{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding:2px}
+.ts{flex:none;min-width:36px;height:36px;padding:0 6px;border-radius:999px;border:2px solid var(--tea-l);background:var(--paper);font-family:var(--mono);font-size:14px;font-weight:500;color:var(--ink2);transition:background .2s,border-color .2s,transform .15s}
+.ts:active{transform:scale(.92)}
+.ts.wide{padding:0 13px;font-family:var(--sans);font-size:13px;font-weight:700}
+.ts.d-o{border-color:var(--do)}.ts.d-s{border-color:var(--ds)}.ts.d-p{border-color:var(--dp)}
+.ts.on{background:var(--amber);border-color:var(--amber);color:#fff}
+.tpl-body{padding:18px 0 44px}
+.remind{display:flex;gap:14px;align-items:flex-start;border-radius:26px;padding:20px 20px}
+.remind .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none;font-size:23px;line-height:1}
+.remind b{display:block;font-size:18px;margin-bottom:4px;font-family:var(--display)}
+.remind p{font-size:15.5px;line-height:1.8}
+.remind.strong{background:#4a3326;color:#fff3e3;box-shadow:0 18px 36px -24px rgba(33,22,15,.8)}
+.remind.strong .ic{background:rgba(255,243,227,.13)}
+.remind.strong b{color:#ffcf94}
+.remind.strong p{color:rgba(255,243,227,.93)}
+.mine{margin-top:14px;background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:16px 18px}
+.mine .t{font-size:13px;font-weight:700;color:var(--ink2);letter-spacing:1px}
+.mine h3{font-family:var(--display);font-size:24px;margin:2px 0 8px}
+.mine .dirs{margin-top:0}
+.mine .note2{color:var(--ink2);font-size:14.5px;margin-top:8px}
+.howread{margin-top:14px;background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:16px 18px;font-size:15px}
+.howread ol{padding-left:1.4em;color:var(--ink2);margin-top:4px}
+.tnav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.tnav.one{grid-template-columns:1fr}
+.tnav .btn{width:100%}
+.tnav-more{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tr{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:20px 18px 18px;box-shadow:0 14px 30px -26px rgba(74,51,38,.5)}
+@media(min-width:720px){.tr{padding:24px 26px 22px}}
+.tr-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;padding-bottom:12px;border-bottom:1px dashed var(--line);margin-bottom:6px}
+.tr-head .rn{font-size:13px;font-weight:700;color:#fff;background:var(--amber);border-radius:999px;padding:2px 12px;letter-spacing:1px}
+.tr-head .rt{font-family:var(--mono);font-size:13px;color:var(--ink3)}
+.tr-head .rw{font-weight:700}
+.tr-head .tag{font-size:12.5px;font-weight:700;color:var(--ink2);background:var(--cream2);border-radius:999px;padding:1px 10px}
+.tchat{background:var(--chat);border-radius:22px;padding:6px 12px 14px;margin-top:12px}
+.tchat .mb{max-width:86%}
+.tcall{margin:12px 0 2px;border-radius:18px;background:linear-gradient(180deg,#4a3223,#2b1d14);color:#fff3e3;padding:12px 14px}
+.tcall .h{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:#ffd9ad}
+.tcall .h svg{width:16px;height:16px;stroke:currentColor}
+.tcall p{font-size:14.5px;line-height:1.7;margin-top:6px}
+.lbl{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:1px;color:var(--ink2);margin:18px 0 8px}
+.lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+.thk{position:relative;font-family:var(--display);font-size:17px;line-height:1.75;border-radius:24px;padding:14px 18px}
+.thk small{display:block;font-family:var(--sans);font-size:12.5px;font-weight:700;letter-spacing:1px;margin-bottom:2px}
+.thk.them{background:#fff;border:2px dashed var(--tea);margin-right:10%}
+.thk.them small{color:var(--amber-d)}
+.thk.me{background:var(--do-l);margin-left:10%;margin-top:10px}
+.thk.me small{color:var(--do)}
+.cmp{display:grid;gap:12px}
+.cmp.two{grid-template-columns:1fr}
+@media(min-width:720px){.cmp.two{grid-template-columns:1fr 1.25fr}}
+.say{border-radius:24px;padding:14px 16px}
+.say small{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:1px;margin-bottom:6px}
+.say p{font-size:15.5px;line-height:1.75}
+.say.yours{background:var(--cream);border:1px solid var(--line)}
+.say.yours small{color:var(--ink2)}
+.say.best{background:var(--out);box-shadow:inset 0 0 0 2px rgba(233,134,44,.35)}
+.say.best small{color:var(--amber-d)}
+.say .dchip{font-size:12px;padding:1px 9px;letter-spacing:0}
+.why{display:grid;gap:8px;margin-top:12px}
+.why div{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.65}
+.why .dchip{margin-top:1px}
+/* ===== 手機：滿版 ===== */
+@media(max-width:600px){
+  .hud{width:100%;padding:calc(8px + env(safe-area-inset-top,0px)) 10px 8px}
+  .hbtn .t{display:none}
+  .hbtn{width:38px;padding:0;justify-content:center}
+  .phone{width:100%;flex:1;height:auto;border-radius:0;padding:0;background:none;box-shadow:none}
+  .screen{border-radius:22px 22px 0 0}
+  .sbar{display:none}
+  .clist .ch{padding-top:14px}
+  .callov{padding-top:34px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(max-width:600px){.ts{min-width:32px;height:32px;padding:0 4px;font-size:13px}.ts.wide{padding:0 9px;font-size:12.5px}.tsteps{gap:4px}}
+@media(max-width:600px){.bg-in{padding:24px 20px 20px;border-radius:28px}.bg-in p{font-size:18px;line-height:1.7}.bg-in .gap{height:10px}.bg-in .rule{margin-top:14px;padding-top:12px}}
+
+/* ===== v4.4 視覺升級：深色首頁主視覺、插畫頭像、紙張質感 ===== */
+body{background-color:var(--cream);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .29 0 0 0 0 .2 0 0 0 0 .15 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* 頂欄改深焦糖 */
+.topbar{background:rgba(38,26,19,.94);border-bottom:1px solid rgba(255,214,160,.12)}
+.topbar .logo{color:#fff3e3}
+.topbar .logo i::after{border-color:#26190f}
+/* 首頁 hero：深夜 */
+.hero.dark{background:radial-gradient(60% 70% at 78% 40%,rgba(255,170,84,.28),rgba(255,170,84,0) 70%),linear-gradient(180deg,#2e2018 0%,#3a281d 100%);color:#fff3e3;padding-block:clamp(30px,5vw,64px) clamp(40px,6vw,72px)}
+.hero.dark::before{display:none}
+.hero.dark .eyebrow{color:#ffbf7a}
+.hero.dark h1{color:#fff3e3}
+.hero.dark h1 span{color:#ffa94f;text-shadow:0 0 34px rgba(255,169,79,.45)}
+.hero.dark .lead{color:rgba(255,243,227,.92)}
+.hero.dark .how{position:relative;background:#fff6e6;color:var(--ink);border:none;border-radius:6px 6px 18px 6px;box-shadow:0 22px 40px -18px rgba(0,0,0,.6);transform:rotate(-.8deg);margin-top:22px}
+.hero.dark .how::before{content:"";position:absolute;top:-11px;left:50%;width:96px;height:22px;transform:translateX(-50%) rotate(2deg);background:rgba(255,214,150,.75);box-shadow:0 2px 4px rgba(0,0,0,.08)}
+.hero.dark .how-t{font-family:var(--display);font-size:18px;letter-spacing:2px;color:var(--amber-d)}
+.hero.dark .sound-hint{background:rgba(255,243,227,.08);border-color:rgba(255,243,227,.16);color:rgba(255,243,227,.8)}
+.hero.dark .sound-hint svg{stroke:#ffbf7a}
+.hero.dark .btn-pri{box-shadow:0 10px 30px -6px rgba(255,150,60,.65),inset 0 -3px 0 rgba(120,60,10,.18)}
+.desk-wrap{position:relative;justify-self:center;width:min(600px,100%)}
+.desk{display:block;width:100%;height:auto;overflow:visible}
+.dk-phone{transform-box:fill-box;transform-origin:center;animation:dkBuzz 3.6s infinite}
+.dk-wave{animation:dkWave 3.6s infinite}
+.dk-halo{animation:dkHalo 3.6s infinite}
+.dk-pool,.dk-bulb{animation:dkLamp 6s ease-in-out infinite}
+@keyframes dkBuzz{0%,62%,100%{transform:none}66%{transform:translate(-3px,0) rotate(-1.4deg)}70%{transform:translate(3px,0) rotate(1.4deg)}74%{transform:translate(-2px,0) rotate(-.8deg)}78%{transform:translate(2px,0)}82%{transform:none}}
+@keyframes dkWave{0%,60%{opacity:0}66%,80%{opacity:1}92%,100%{opacity:0}}
+@keyframes dkHalo{0%,60%,100%{opacity:.55}70%{opacity:1}}
+@keyframes dkLamp{50%{opacity:.82}}
+@media(max-width:899px){.desk-wrap{width:min(480px,100%);margin-top:4px}}
+/* 插畫頭像 */
+.avs{display:block;width:100%;height:100%;border-radius:50%}
+.av:has(.avs),.mav:has(.avs),.cav:has(.avs),.rav:has(.avs){background:none!important;padding:0;overflow:hidden;border-radius:50%}
+.who .av:has(.avs){width:56px;height:56px}
+.cav:has(.avs){box-shadow:0 0 0 6px rgba(255,243,227,.12)}
+.callov.ringing .cav{animation:ring 1.2s infinite;border-radius:50%}
+.rav{display:inline-block;width:26px;height:26px;vertical-align:-7px;margin-right:6px}
+.banner .av:has(.avs){width:38px;height:38px}
+.waitbar .av{width:30px;height:30px;flex:none}
+.crow .av:has(.avs){width:48px;height:48px}
+.mav:has(.avs){width:34px;height:34px}
+/* 選人頁、範本頁的卡片多一點紙感 */
+.who,.tr,.step,.mine,.howread{background-image:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0))}
+
+/* ===== v4.5 中文斷句：一句一句換行，不讓單字落單 ===== */
+html{line-break:strict}
+.ph{display:inline-block;max-width:100%}
+h1,h2,h3,.who h3,.endcard h2{word-break:keep-all;text-wrap:balance}
+.b,.opt,.copt,.cap p,.thk,.say p,.why span,.epi,.remind p,.steps p,.teaser,.lead,.bg-in p,.vtext{overflow-wrap:anywhere}
+/* ===== 來電一定要接 ===== */
+.cbtns.one{justify-content:center}
+.ringleft{min-height:22px;transition:color .3s}
+.ringleft.on{color:#ffd29e;font-family:var(--sans);font-size:15px;font-weight:700;animation:nudgeTxt 1.4s ease-in-out infinite}
+@keyframes nudgeTxt{50%{opacity:.55}}
+.callov.nudge .cbtn.yes i{width:84px;height:84px;box-shadow:0 0 0 0 rgba(79,155,91,.6);animation:bounce 1.2s infinite,answerGlow 1.2s infinite}
+@keyframes answerGlow{0%{box-shadow:0 0 0 0 rgba(120,200,130,.65)}100%{box-shadow:0 0 0 22px rgba(120,200,130,0)}}
+.nw{white-space:nowrap}
+.epi,.thk,.say p,.why span,.remind p,.vtext,.teaser{text-wrap:pretty}
+
+</style>
+</head>
+<body>
+<div id="site"></div>
+<div id="stage"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+var SCEN = {};
+/* ================================================================
+   情境一：家長「晚上九點的訊息」（固定 6 回合）
+   選項方向 d：o 顧對方／s 顧自己／p 守原則（體驗模式不顯示）
+   item：字串＝該回合對象；{typing}；{unsend}；{voice}；{div}；{sys}；{wait}
+         任何 item 可加 when:{r:回合索引, d:方向}，只有那回合選了該方向才出現
+   tpl：八面玲瓏範本（對方內心戲 inner／老師真心話 feel／回法 best／為什麼 why{o,s,p}）
+   ================================================================ */
+SCEN.parent = {
+  id:'parent', role:'家長', name:'宇振媽媽', av:'👩', title:'晚上九點的訊息',
+  teaser:'孩子被推倒、被笑了。晚上九點，訊息一則接一則。',
+  preview:'老師您好，不好意思這麼晚打擾🙏', previewTime:'21:02',
+  bg:['今天下午，宇振在走廊被阿凱推了一下，跌倒擦傷膝蓋。','你帶他擦了藥、請阿凱道歉，也寫在聯絡簿上，你以為事情已經處理完了。','','晚上九點，你剛洗完澡，終於可以坐下來追一集劇。','突然，手機亮了，有訊息傳來……'],
+  threads:{
+    main:{ name:'宇振媽媽', av:'👩', sub:'宇振的家長' },
+    kai:{ name:'阿凱媽媽', av:'🧕', sub:'阿凱的家長' }
+  },
+  cardQuote:'他現在還在房間哭，說明天不想去學校了',
+  rounds:[
+    /* ---------- 第 1 回合 ---------- */
+    { t:'21:02', th:'main',
+      items:['老師您好，不好意思這麼晚打擾🙏','宇振今天回來膝蓋都破皮了','他說是被阿凱推倒的，而且旁邊的人都在笑他','他現在還在房間哭，說明天不想去學校了','老師您知道這件事嗎？'],
+      chase:'老師？',
+      opts:[
+        { d:'o', t:'媽媽真的很抱歉😢 是我沒顧好宇振，讓他受委屈了。他現在還好嗎？您慢慢說，我都在。',
+          re:['老師您不要這樣說……','不過您願意聽，我真的比較安心了🙏','那我可以多問幾件事嗎？'] },
+        { d:'s', t:'媽媽您好，下午的處理我有寫在聯絡簿上，細節明天到校再跟您說明喔。',
+          re:['聯絡簿我看了。','可是他現在還在哭耶……','明天？他就是說明天不想去學校啊。'] },
+        { d:'p', t:'媽媽您好，下午我有幫宇振擦藥，也請阿凱道歉了。被笑的部分我當下沒看到，明天會先了解清楚，再跟您說明。',
+          re:['所以老師沒看到大家在笑他？','……宇振不會亂講的。'] }
+      ],
+      timeout:['已讀了耶……😅','老師是不是在忙？'],
+      tpl:{
+        inner:'看到孩子哭成這樣，我心都碎了。聯絡簿我看了，可是我想知道的是：老師到底有沒有站在我兒子這邊？',
+        feel:'其實很想回：「我有寫聯絡簿好嗎！」而且現在是晚上九點，我也才剛坐下來。看到「您知道這件事嗎」，第一個感覺是被質問。',
+        best:'宇振媽媽您好，謝謝您告訴我。宇振現在還好嗎？下午我有幫他擦藥，也請阿凱道歉了；被笑的部分我當下沒看到，明天一早會了解清楚。今晚先讓他好好休息，明天中午前我打給您。',
+        why:{ o:'第一句先問孩子現在好不好，她最需要的是「老師在乎」。', p:'說清楚做了什麼、沒看到什麼，不認不是事實的錯，也不急著下結論。', s:'把細節移到明天白天，今晚不開啟一場長談。' }
+      } },
+
+    /* ---------- 第 2 回合 ---------- */
+    { t:'21:06', th:'main',
+      items:['老師，我覺得只有道歉不夠','阿凱是不是常常這樣？推人很危險耶','學校會怎麼處罰他？','可以給我阿凱媽媽的電話嗎？我想直接跟她談'],
+      chase:{ typing:true },
+      opts:[
+        { d:'o', t:'我懂您的心情。我先問問阿凱媽媽願不願意給電話，今晚就回覆您。',
+          re:['好！謝謝老師🙏','我等你喔，今天一定要講清楚。'] },
+        { d:'s', t:'處罰要看學校的規定，不是我能決定的。電話我也不方便給，抱歉。',
+          re:['所以老師是不打算處理就對了？','我只是想保護我兒子。'] },
+        { d:'p', t:'對方家長的電話涉及個資，我不能提供。怎麼處理，我會先聽兩個孩子的說法再決定，不會只聽一邊。',
+          re:['兩邊？受傷的是我兒子耶。','難道推人還有理由嗎？'] }
+      ],
+      timeout:['老師？','您是不是覺得我很麻煩……'],
+      tpl:{
+        inner:'我不是想吵架，我只是怕宇振以後還會被欺負。如果學校不處理，我只好自己來。',
+        feel:'心裡想：「處罰又不是我說了算。給電話就是讓兩個家長吵起來，最後還是我收拾。」可是又怕一拒絕，她就覺得我在護著阿凱。',
+        best:'我懂您擔心宇振以後的安全。對方家長的電話我不能提供，但明天我會先分別跟兩個孩子談，也會聯絡阿凱家長；這幾天我會多留意宇振身邊的狀況。明天放學前，我跟您說處理情形。',
+        why:{ o:'她真正要的不是電話，是「接下來怎麼保護孩子」，所以給她一整套做法。', p:'不給個資、不急著定罰，先聽兩邊。', s:'回報時間定在明天放學前，不是今晚，也不讓自己變成傳話筒。' }
+      } },
+
+    /* ---------- 第 3 回合：來電 ---------- */
+    { t:'21:12', th:'main',
+      items:['老師在嗎？','我直接打給你比較快'],
+      call:{ from:'宇振媽媽', av:'👩', voice:{ rate:1.35, pitch:1.1 },
+        p1:['喂？老師嗎？不好意思喔，我想說用打的比較快。','宇振剛剛又跟我說，不只今天，他午餐都一個人吃，大家都不跟他玩。','老師，我不是要怪你，可是你們班是不是有人在排擠他？','他小時候就被欺負過，我真的很怕又來一次……'],
+        opts:[
+          { d:'o', t:'媽媽您別急，慢慢說，我都在聽。', dur:41,
+            p2:['老師你人真好……','我跟你說，他從小就比較敏感，以前在別的班也是……','（四十分鐘後）啊，都這麼晚了！謝謝老師聽我說這麼多。'] },
+          { d:'s', t:'媽媽，我現在不太方便講電話，我們明天再說好嗎？',
+            p2:['不方便？……','好，那不打擾老師休息了。'] },
+          { d:'p', t:'媽媽，排擠的事很重要，我不想在電話裡隨便下結論。給我兩天觀察、跟孩子們談，週五放學前回覆您。',
+            p2:['兩天喔……','好吧，那老師要說到做到喔。'] }
+        ],
+        to:['老師？你有在聽嗎？','……算了，我再傳訊息給你。'],
+        miss:['老師在忙嗎？','我剛剛打給你',{ unsend:'是不是要我打去學校你才會接' },'宇振一直問我，老師是不是不喜歡他','其他班的老師都會接電話耶……'] },
+      tpl:{
+        inner:'打字講不清楚，聽到老師的聲音我才會安心。我要讓老師知道，這不是第一次了。',
+        feel:'看到來電顯示，心跳直接加速。接了，今晚就沒了；不接，明天會被說「老師都不接電話」。',
+        best:'媽媽，我聽到了，您很擔心宇振是不是被排擠。這件事很重要，我想好好觀察、跟孩子們聊過再回覆您，週五放學前打給您。今晚先陪陪宇振，好嗎？',
+        why:{ o:'先把她的擔心說出來，讓她知道你聽見了。', p:'不在電話裡下結論，先觀察、再回覆。', s:'由你主動收尾、約好時間，電話不會無限延長。' }
+      } },
+
+    /* ---------- 第 4 回合：另一位家長 ---------- */
+    { t:'21:20', th:'kai',
+      items:['老師不好意思這麼晚打擾','阿凱回家說今天被老師要求道歉','可是他說是宇振先推他，他才推回去的',
+        { text:'剛剛老師問我能不能給電話，是宇振媽媽要找我嗎？', when:{ r:1, d:'o' } },
+        '為什麼只有阿凱要道歉？'],
+      chase:'老師？您在嗎？',
+      opts:[
+        { d:'o', t:'阿凱媽媽抱歉，下午我可能沒看到全部經過。明天我也會請宇振跟阿凱道歉，兩個都有錯。',
+          re:['這樣才公平嘛！','謝謝老師願意聽阿凱說🙏'] },
+        { d:'s', t:'阿凱媽媽，這件事明天到學校再說好嗎？今晚有點晚了。',
+          re:['……好吧。','老師是不是覺得阿凱比較皮，所以錯都是他的？'] },
+        { d:'p', t:'謝謝您告訴我，一開始的經過我確實沒看到。明天我會分別再問兩個孩子，確認後兩邊用一樣的標準處理。',
+          re:['好……','希望老師這次不要只聽一邊。'] }
+      ],
+      timeout:['已讀不回……','好，我明天直接去學校問。'],
+      tpl:{
+        inner:'我兒子是衝了點，但不會無緣無故推人。老師是不是只聽了另一邊？我也是家長啊。',
+        feel:'心裡 OS：「怎麼連你也來了……」下午明明處理完了，現在兩邊都覺得我偏心。',
+        best:'阿凱媽媽您好，謝謝您告訴我這個部分，下午一開始的經過我確實沒看到。明天我會再分別跟兩個孩子確認，用一樣的標準處理，處理完跟您說明。今晚也辛苦您了。',
+        why:{ o:'承認她的孩子可能也有委屈，讓她覺得被聽見、沒被貼標籤。', p:'承認自己沒看到全部，承諾用同一套標準查清楚，不當場改判。', s:'細節移到明天，也不把另一位家長的話轉述過去，避免夾在中間。' }
+      } },
+
+    /* ---------- 第 5 回合 ---------- */
+    { t:'21:31', th:'main',
+      items:['老師？剛剛怎麼突然不見了',
+        { voice:{ d:'0:48', text:'老師我跟你說，宇振從小就比較敏感，以前的老師都會每天傳訊息跟我說他在學校怎麼樣，拍個照片給我，我才放心。所以我想說，可不可以請你也每天跟我說一下，不用很多，幾句話就好……' } },
+        '這樣可以嗎？🙏'],
+      chase:'老師？',
+      opts:[
+        { d:'o', t:'好，我每天放學後傳訊息跟您說宇振的狀況。',
+          re:['太好了！老師最好了😭','有照片的話更好喔！'] },
+        { d:'s', t:'媽媽，我每天真的忙不過來，有需要我再主動跟您說。',
+          re:['忙不過來……','所以宇振的事不重要就對了。'] },
+        { d:'p', t:'班上每個孩子我都用聯絡簿跟家長溝通，沒辦法只對一位家長每天回報，這樣對其他孩子不公平。',
+          re:['其他孩子又沒有被欺負。','宇振現在需要的是特別照顧耶。'] }
+      ],
+      timeout:['又不見了……','老師是不是在跟別的家長聊天？'],
+      tpl:{
+        inner:'我知道我很煩。可是每天把他送進學校，就像把心臟交出去。只要每天幾句話，我就睡得著。',
+        feel:'很想回：「班上那麼多孩子，每個家長都要每天回報，我還要不要睡？」可是聽到她說孩子從小就敏感，又有點心軟。',
+        best:'我懂您需要知道宇振在學校好不好。每天傳訊息我沒辦法做到，但接下來兩週，我會在聯絡簿多寫幾句宇振的狀況，週五再打電話跟您聊一次。兩週後我們再看看要不要調整，好嗎？',
+        why:{ o:'回應她「想安心」的需求，而不是只回答「可不可以」。', p:'不開「每天私訊」的特例，用聯絡簿這個每個家長都一樣的管道。', s:'有期限、有頻率，兩週後再調整，不會變成永遠。' }
+      } },
+
+    /* ---------- 第 6 回合 ---------- */
+    { t:'21:40', th:'main',
+      items:['好，謝謝老師。','對了，我在想要不要在班群問問看','有沒有其他孩子也被阿凱欺負過','大家一起跟學校反映，比較有用吧？','老師覺得呢？'],
+      chase:{ typing:true },
+      opts:[
+        { d:'o', t:'您覺得需要的話，可以問問看。',
+          re:['好，那我來問！','謝謝老師支持我🙏'] },
+        { d:'s', t:'這個媽媽您自己決定就好。我先休息了，晚安。',
+          re:['……好。','老師晚安。'] },
+        { d:'p', t:'請先不要在群組問。這樣阿凱會被貼標籤，事情也會更難處理。有任何狀況，請直接跟我說。',
+          re:['所以我連問都不能問？','……好，我知道了。'] }
+      ],
+      timeout:['不回就是默認囉？','那我問了。'],
+      tpl:{
+        inner:'一個人講沒用，大家一起講學校才會重視。而且我想知道，是不是只有我家孩子受委屈。',
+        feel:'腦中已經浮現群組炸鍋的畫面。想說「拜託不要」，又怕她覺得我在掩蓋什麼。',
+        best:'謝謝您先問我。在群組問，阿凱和宇振都可能被大家討論，事情會更難處理，所以想請您先不要。我明天就開始了解，週五一定給您回覆；如果有其他孩子也有狀況，我會一起處理。',
+        why:{ o:'先謝謝她「先問我」，再承接她怕孩子孤立無援的擔心。', p:'說清楚為什麼不行：群組公審會傷到兩個孩子。', s:'把處理收回自己手上、給確定期限，免得明天收拾更大的爛攤子。' }
+      } }
+  ],
+
+  /* 結局：依 6 回合的傾向決定。o/s/p 單一傾向、os/op/sp 兩向平手（3–3–0）、h 三向完全平衡（2–2–2） */
+  endings:{
+    o:{ n:'全年無休的好老師',
+      t:'宇振媽媽很滿意，說你是她遇過最好的老師，從此每天晚上都傳訊息給你。每日回報、幫忙問電話、群組的事你也沒擋。一個月後，全家週末出去吃飯，你一直低頭回訊息。家人終於忍不住：「你對別人家的小孩，比對自己家的人還有耐心。」',
+      items:[{ div:'00:12' },'老師還沒睡吧？想跟你說一下宇振明天……'] },
+    s:{ n:'準時關機的人',
+      t:'你保住了今晚，劇也追完了。隔天早上八點，宇振媽媽坐在主任辦公室，班群裡多了一句「老師晚上都不回訊息」。你沒做錯什麼，只是從那天起，每到星期天晚上就開始失眠，因為你怕打開手機。',
+      items:[{ div:'23:04' },'算了，我明天直接去找主任。'] },
+    p:{ n:'照規定來的老師',
+      t:'每一步你都站得住腳：不給個資、不開特例、不讓群組公審，主任挑不出毛病。只是宇振媽媽跟別的家長說你「很冷」，阿凱媽媽也覺得你沒站在她那邊。你做對了每一件事，卻常常覺得很孤單，沒有人說你錯，也沒有人說謝謝。',
+      items:['好的，老師。'] },
+    os:{ n:'忽冷忽熱的老師',
+      t:'你有時什麼都答應，有時突然消失。宇振媽媽摸不透你，但她學會一件事：只要多傳幾則、語氣急一點，你就會讓步。答應的事越來越多，累到不想回時，又因為愧疚加倍補償。這個循環從哪一晚開始的，你自己也說不清楚。',
+      items:['老師，那明天的事就拜託你了喔🙏'] },
+    op:{ n:'燃燒自己的模範生',
+      t:'你溫柔又公平，兩邊家長都說不出你哪裡不好。代價是你自己：每晚回訊息到十二點，週末在寫觀察紀錄。學期末你得了帶狀皰疹，醫生說是壓力。請假第一天，你躺在床上回了三則家長訊息。',
+      items:['謝謝老師，辛苦了🙏',{ div:'23:47' },'老師，還有一件事想問……'] },
+    sp:{ n:'堅固的防火牆',
+      t:'下班就關機，事情都照程序走，沒有人能說你不專業。只是家長日那天，宇振媽媽跟你說話時一直看著主任；宇振在教室裡，也不太敢跟你對到眼。朋友說你變了：「你現在講話好像公文。」',
+      items:['好。'] },
+    h:{ n:'平衡木上的老師', hidden:true,
+      t:'你沒有每次都做對：有時太軟，有時太硬，有時只想躲起來。但每一次，你都試著走回中間。宇振媽媽偶爾還是會晚上傳訊息，只是她慢慢習慣了，你會在隔天早上回。這不叫八面玲瓏，這叫在三個方向之間，一直找平衡。',
+      items:['謝謝老師，晚安🙏',{ wait:1800 },'老師，我是宇振。謝謝老師。晚安🌙'] }
+  }
+};
+
+/* ================================================================
+   情境二：主任「客訴要你先道歉」（固定 6 回合）
+   ================================================================ */
+SCEN.boss = {
+  id:'boss', role:'主任', name:'陳主任', av:'🧑‍💼', title:'客訴要你先道歉',
+  teaser:'你明明有通知家長。下班前，主任要你先低頭。',
+  preview:'老師，在嗎？', previewTime:'16:52',
+  bg:['今天上午，子芸在走廊跌倒，額頭撞出一個包。','你帶她去保健室冰敷，寫了聯絡簿，十點半也傳訊息給子芸爸爸。訊息顯示已讀，你以為事情已經處理完了。','','下午四點五十分，你改完最後一本聯絡簿，正準備下班。','突然，手機亮了，是陳主任……'],
+  threads:{
+    main:{ name:'陳主任', av:'🧑‍💼', sub:'行政辦公室' },
+    dad:{ name:'子芸爸爸', av:'👨', sub:'子芸的家長' }
+  },
+  cardQuote:'你才第二年，這種事留下紀錄對你不好。我是為你好。',
+  rounds:[
+    /* ---------- 第 1 回合 ---------- */
+    { t:'16:52', th:'main',
+      items:['老師，在嗎？','子芸爸爸剛剛打來學校，講了快一個小時','他說孩子頭撞腫了，老師都沒通知','還說要找議員😮‍💨','你先不要下班，這件事要馬上處理'],
+      chase:'老師？',
+      opts:[
+        { d:'o', t:'主任對不起，給您添麻煩了。我先不走，您說怎麼處理我就怎麼做。',
+          re:['好，你有這個態度就好。','等一下我跟你說怎麼做。'] },
+        { d:'s', t:'主任，我五點有約了，明天一早到辦公室跟您說明可以嗎？',
+          re:['明天？家長今天就要答案。','你們新老師是不是覺得時間到就沒事了？'] },
+        { d:'p', t:'主任，我上午有通知。十點半傳了訊息給子芸爸爸，顯示已讀，聯絡簿也有寫。我把截圖傳給您。',
+          re:[{ sys:'你傳送了 2 張截圖' },'……已讀。好。','但家長現在很生氣，事情不是有沒有通知這麼簡單。'] }
+      ],
+      timeout:['老師？已讀不回喔？','你是不是已經下班了？'],
+      tpl:{
+        inner:'家長說要找議員，校長明天一定會問我。我只想趕快把火滅掉，最快的方法，就是老師先低頭。',
+        feel:'看到「老師都沒通知」，血壓直接上來：我明明有傳訊息！可是對方是主任，我才第二年，不敢太大聲。',
+        best:'主任，我還在學校。上午子芸跌倒後，我有帶她冰敷、寫聯絡簿，十點半也傳訊息給爸爸，顯示已讀，我先把截圖傳給您。家長這麼生氣，我們一起想想怎麼回應比較好。',
+        why:{ o:'說「我還在」、「一起想想」，讓主任知道你沒有要丟下他一個人處理。', p:'先把事實和證據交出來，不認不是事實的疏忽。', s:'不急著答應任何處理方式，先讓主任看到你做了哪些事。' }
+      } },
+
+    /* ---------- 第 2 回合 ---------- */
+    { t:'16:58', th:'main',
+      items:['我跟你說，家長在氣頭上，你跟他爭有沒有通知沒有意義','你就打個電話給他，說「是我們疏忽，下次會注意」','事情就過去了','你才第二年，這種事留下紀錄對你不好。我是為你好。'],
+      chase:{ typing:true },
+      opts:[
+        { d:'o', t:'好的主任，我現在就打給子芸爸爸道歉。',
+          re:['很好，這樣才對。','記得態度要軟，打完回報我。'] },
+        { d:'s', t:'主任，可以請您幫我跟家長說明嗎？我怕我打過去會更糟。',
+          re:['我幫你說？家長要找的是導師欸。','新老師就是要學會自己處理。'] },
+        { d:'p', t:'主任，我願意打給家長關心子芸，但「沒通知」不是事實，我沒辦法說是我疏忽。',
+          re:['你現在是在跟我講道理？','我是在幫你欸。'] }
+      ],
+      timeout:['老師，你有在看嗎？','我打給你。'],
+      tpl:{
+        inner:'老師有傳訊息，我知道。但家長要的是一個台階，最快的台階就是老師說一句「疏忽」。',
+        feel:'很想回：「所以有做事的人要道歉？」「為你好」三個字，聽起來比較像「為我好」。',
+        best:'謝謝主任提醒我。我願意今天就打給子芸爸爸，先關心子芸的傷，也說明當天怎麼處理。只是「沒通知」不是事實，我說成疏忽，紀錄上反而對我更不好。可以請您幫我看看，怎麼說家長比較聽得進去嗎？',
+        why:{ o:'先謝謝主任，再請他一起想說法，他會覺得自己在幫你，不是被你頂撞。', p:'願意打電話、願意關心，但不說不是事實的話。', s:'用「紀錄對我不好」回應他的「為你好」，保護自己也說得過去。' }
+      } },
+
+    /* ---------- 第 3 回合：主任來電 ---------- */
+    { t:'17:03', th:'main',
+      items:['電話接一下。'],
+      call:{ from:'陳主任', av:'🧑‍💼', voice:{ rate:1.45, pitch:0.85, g:'m' },
+        p1:['喂，老師，我陳主任。','子芸爸爸又打來了，說老師到現在都沒有聯絡他。','校長也在問了，你知道這有多嚴重嗎？','我不管你有沒有傳訊息，你現在就打給家長，先道歉，把事情壓下來。聽到沒有？'],
+        opts:[
+          { d:'o', t:'好，我知道了主任，我現在就打。',
+            p2:['這樣就對了。','打完馬上回報我，態度要軟。'] },
+          { d:'s', t:'主任，我現在腦袋很亂，可以讓我想一下再處理嗎？',
+            p2:['想一下？家長等不了你想一下。','……好，你自己看著辦，出事你自己負責。'] },
+          { d:'p', t:'主任，我會打給家長，但我會照實說明，不會說是我疏忽。這樣對學校、對我都比較安全。',
+            p2:['……照實說可以，但語氣要軟，不要跟家長吵。','先關心孩子，再講你有傳訊息。講完回報我。'] }
+        ],
+        to:['老師？你有在聽嗎？','……我等一下傳訊息給你。'],
+        miss:['老師，接電話',{ unsend:'你這種態度，考績還要不要？' },'家長那邊很急','新老師要有危機意識','五分鐘內回我。'] },
+      tpl:{
+        inner:'校長在問，我只能壓下面的人。老師願意出面道歉，我在校長面前就有交代。',
+        feel:'主任在電話裡根本不讓人插話。腦中只剩一句：「我到底做錯了什麼？」',
+        best:'主任，我聽到了，校長在問，您壓力很大。我現在就打給子芸爸爸，先關心孩子，再照實說明我上午有通知；如果家長要學校表態，我們再一起決定。打完我馬上回報您。',
+        why:{ o:'先說出主任的壓力，他比較願意聽你接下來的話。', p:'電話照打，但內容照實說，不替不存在的疏忽道歉。', s:'把「學校要不要表態」交回給主任一起決定，不是你一個人扛。' }
+      } },
+
+    /* ---------- 第 4 回合：家長從另一個視窗跳出來 ---------- */
+    { t:'17:12', th:'dad',
+      items:['老師，我是子芸爸爸','我女兒額頭腫一個包，我是下班回家才看到的','你那個訊息寫「有點撞到，已冰敷」，我哪知道腫成這樣？','主任跟我說學校會處理，所以老師到底要說什麼？'],
+      chase:'老師？',
+      opts:[
+        { d:'o', t:'子芸爸爸，對不起，是我疏忽了，以後不會再發生。',
+          re:['你知道是疏忽就好。','我會跟校長反映，希望學校給個交代。'] },
+        { d:'s', t:'子芸爸爸，這件事主任會跟您說明，我這邊不方便多說。',
+          re:['不方便？你是導師耶。','好，那我明天直接去找校長。'] },
+        { d:'p', t:'子芸爸爸，我上午十點半有傳訊息給您，系統顯示已讀，聯絡簿也有寫。該通知的流程我都有做到。',
+          re:['所以是我的問題？','我女兒受傷，你跟我講流程？'] }
+      ],
+      timeout:['已讀不回？','好，我知道學校的態度了。'],
+      tpl:{
+        inner:'我知道老師有傳訊息，可是「有點撞到」跟我看到的差太多了。我氣的是：女兒受傷，我是最後一個知道的。',
+        feel:'心裡一沉：「有點撞到」這四個字，好像真的寫得太輕了。可是我也不想被說成沒通知。',
+        best:'子芸爸爸您好，子芸受傷讓您擔心了，真的很抱歉。她現在還會痛嗎？上午我有帶她冰敷，十點半也傳了訊息，但我寫得太簡單，沒讓您知道腫得這麼明顯。以後孩子受傷，我會直接打電話給您。',
+        why:{ o:'道歉的是「讓您擔心」和「寫得太簡單」，接住他當爸爸的心疼。', p:'說清楚有通知、有處理，不承認「沒通知」這個不是事實的說法。', s:'提出具體的改進（以後打電話），事情有收尾，不會一直被追究。' }
+      } },
+
+    /* ---------- 第 5 回合 ---------- */
+    { t:'17:25', th:'main',
+      items:['老師，子芸爸爸剛剛又打給我',
+        { text:'他說你承認疏忽了，要學校給個交代。', when:{ r:3, d:'o' } },
+        { text:'他說你叫他來找我？？', when:{ r:3, d:'s', to:false } },
+        { text:'他說你已讀不回他。', when:{ r:3, d:'s', to:true } },
+        { text:'他說你在跟他講流程。', when:{ r:3, d:'p' } },
+        '總之，這件事要寫一份事件說明，明天早上交給我','寫的時候注意一下用詞，不要寫得好像學校都沒錯','你懂我的意思吧？'],
+      chase:'老師？',
+      opts:[
+        { d:'o', t:'懂，主任。我會照您的意思寫，明天一早交。',
+          re:['很好。寫完先給我看，我幫你改。','你這樣配合，以後我也會照顧你。'] },
+        { d:'s', t:'主任，我今天真的很累了，說明可以後天再交嗎？',
+          re:['後天？校長明天就要看。','你們年輕人抗壓性真的要再練練。'] },
+        { d:'p', t:'主任，我會照時間順序寫清楚，哪裡做得不夠我都會寫，但不會改成跟事實不一樣的版本。',
+          re:['我沒有叫你寫假的。','……你寫完先給我看。'] }
+      ],
+      timeout:['不回我是什麼意思？','明天八點，我辦公室。'],
+      tpl:{
+        inner:'這份說明是要給校長看的。寫得太直，學校跟我都難看；老師只要措辭軟一點，大家都好過。',
+        feel:'「你懂我的意思吧」——懂啊，就是要我背鍋。可是我真的有辦法拒絕主任嗎？',
+        best:'好的主任，我明天早上交。我會照時間把處理經過寫清楚，也會寫我訊息寫得太簡單、以後改用電話通知的部分。用詞上如果需要調整，請您直接標出來，我們一起看。',
+        why:{ o:'答應時間、主動承認自己真正可以改進的地方，給主任台階。', p:'照時間順序寫事實，不改成別的版本。', s:'「請您標出來、一起看」，改動的責任不會全落在你身上，也留下紀錄。' }
+      } },
+
+    /* ---------- 第 6 回合 ---------- */
+    { t:'20:40', th:'main',
+      items:[{ div:'20:40' },'老師，還沒睡吧','子芸的事就先這樣','對了，下週家長日的主持人還沒有人，你來吧','這次的事讓家長印象不好，主持一下剛好可以挽回形象😊'],
+      chase:{ typing:true },
+      opts:[
+        { d:'o', t:'好的主任，我來主持。',
+          re:['我就知道你最配合了😊','流程表我明天給你。'] },
+        { d:'s', t:'主任，我這週真的忙不過來，可以請別的老師嗎？',
+          re:['別的老師也很忙啊。','好吧，那我再想想要找誰。'] },
+        { d:'p', t:'主任，主持人應該照輪值安排，這學期不是輪到我。子芸的事，我會用後續追蹤來負責。',
+          re:['……你很會算嘛。','好，我知道了。'] }
+      ],
+      timeout:['不回就當你答應囉😊','流程表我明天給你。'],
+      tpl:{
+        inner:'這個新老師好用，順便把家長日塞給他，我也少一件事。說「挽回形象」，他應該不好意思拒絕。',
+        feel:'原來重點在這裡。又累又委屈，但「形象不好」幾個字，還是刺到我了。',
+        best:'謝謝主任想到我。子芸的事我會持續追蹤，跟家長保持聯絡。家長日主持這週我真的排不進來；如果輪值輪到我，我一定接，這次能不能先照輪值表安排？',
+        why:{ o:'先謝謝他想到你，也說明你會用追蹤修補家長關係，回應他在意的「形象」。', p:'用輪值制度回應，不讓「出事就多做」變成慣例。', s:'清楚婉拒這次，也留下「輪到一定接」的空間，不撕破臉。' }
+      } }
+  ],
+
+  endings:{
+    o:{ n:'主任最好用的人',
+      t:'你道歉、照主任的意思寫說明、接下家長日主持。主任逢人就說你「很配合」，陳情回覆上寫著「導師疏忽，已輔導改進」。半年後，你的行事曆塞滿別人推不掉的工作。過年回家，親戚問你工作怎麼樣，你說還好，然後在餐桌上改了一晚的活動流程。',
+      items:[{ div:'下週一' },'老師，運動會的總召也麻煩你囉😊'] },
+    s:{ n:'站在門外的人',
+      t:'你沒有多做，也沒有多說，保住了晚上。隔天早上，子芸爸爸走進校長室，主任對校長說：「我昨天就提醒過老師了。」從那之後，辦公室的事你總是最後一個知道。你開始習慣午休時一個人吃飯。',
+      items:[{ div:'隔天 08:05' },'老師，來校長室一下。'] },
+    p:{ n:'最難搞的新老師',
+      t:'你每一步都有憑有據，說明寫得清清楚楚，誰也挑不出錯。但主任在會議上開始提「某些新老師很有主見」，子芸爸爸覺得你在推責任。學期末的考核，你拿到一個「待加強」，備註欄寫著：溝通協調。',
+      items:['好，我知道了。'] },
+    os:{ n:'看風向的人',
+      t:'主任大聲你就讓，主任一走你就躲。事情暫時過去了，但主任學會一件事：對你，只要夠兇就有用。你答應的事越來越多，做不完就拖著，被追的時候再更累地補。你開始在星期天晚上胃痛。',
+      items:['那就這樣，明天記得交。'] },
+    op:{ n:'一個人扛全部',
+      t:'你照實說明，也把家長和主任都顧好：打電話、寫說明、接主持、每天追蹤子芸。大家都滿意，只有你自己不見了。那個學期你瘦了四公斤，最常陪你吃晚餐的，是超商的微波便當。',
+      items:['辛苦了，家長日就麻煩你了😊'] },
+    sp:{ n:'不好惹的新老師',
+      t:'你守住事實，也守住下班時間，沒有人能說你錯。只是主任再也不找你商量事情，有好機會也不會想到你。你很安全，也很邊緣。朋友說你變了：「你以前不是很喜歡跟人合作嗎？」',
+      items:['好。'] },
+    h:{ n:'站得住的老師', hidden:true,
+      t:'你有低頭的時候，也有堅持的時候，還有一次只想躲起來。但最後，你沒有說謊，也沒有把事情鬧大。幾天後，子芸在聯絡簿上畫了一個笑臉，旁邊寫著：「我的頭不痛了。」',
+      items:['好，那就這樣。',{ div:'22:00' },'今天辛苦了。你處理得比我想的好。'] }
+  }
+};
+
+/* ================================================================
+   情境三：同事「功勞被搶」（固定 6 回合）
+   main 是辦公室群組（多人），群組訊息用 {from, av, text}
+   ================================================================ */
+(function(){
+  function W(t){ return { from:'王老師', av:'👩‍🏫', text:t }; }
+  function L(t){ return { from:'林老師', av:'🧑‍🏫', text:t }; }
+  function C(t){ return { from:'陳老師', av:'👨‍🏫', text:t }; }
+  SCEN.col = {
+    id:'col', role:'同事', name:'王老師', av:'👩‍🏫', title:'功勞被搶',
+    teaser:'企劃是你熬夜寫的，校長卻稱讚了王老師。晚上，群組裡話中有話。',
+    preview:'這次真的是我熬了好幾個晚上😂', previewTime:'20:03',
+    bg:['上個月要辦親子活動，王老師在會議上說：「年輕人點子多，企劃你來寫吧。」','你熬了三個晚上寫完企劃和通知單，通知單的承辦人欄位，照慣例填了你的名字。','今天的校務會議上，王老師上台報告這份企劃，說是「我這邊規劃」，校長當場稱讚。','散會時，校長翻到通知單，隨口問了一句：「咦，承辦人是新老師？」王老師的笑容僵了一下。','你坐在位子上，一句話也沒說，你以為這件事就這樣過去了。','','晚上八點，你剛吃完飯，打開辦公室群組。','王老師傳了一則訊息……'],
+    threads:{
+      main:{ name:'辦公室群組', av:'💬', sub:'12 位成員', group:true },
+      wang:{ name:'王老師', av:'👩‍🏫', sub:'資深同事' },
+      boss:{ name:'陳主任', av:'🧑‍💼', sub:'行政辦公室' }
+    },
+    cardQuote:'我們是一個團隊，誰寫的有那麼重要嗎？',
+    rounds:[
+      /* ---------- 第 1 回合：群組 ---------- */
+      { t:'20:03', th:'main',
+        items:[W('各位辛苦了～今天校長很肯定我們的親子活動企劃👏'),W('這次真的是我熬了好幾個晚上，大家看得出來吧😂'),L('王老師辛苦了！'),W('也謝謝大家「多少」有幫忙啦～有些人比較忙，我懂😊'),W('我們最年輕的老師最清楚了，對吧？')],
+        chase:W('怎麼不說話～😊'),
+        opts:[
+          { d:'o', t:'王老師辛苦了！活動一定會很成功👏',
+            re:[W('還是年輕人懂事😊'),C('👍')] },
+          { d:'s', t:'收到～大家辛苦了。',
+            re:[W('「收到」？😅'),W('好冷淡喔～')] },
+          { d:'p', t:'企劃是我寫的，王老師有幫忙看過。能被校長肯定，我也很開心。',
+            re:[L('咦？原來是你寫的喔！'),W('我們是一個團隊，誰寫的有那麼重要嗎？')] }
+        ],
+        timeout:[W('已讀不回喔～😊'),W('年輕人就是比較有個性。')],
+        tpl:{ who:'王老師',
+          inner:'校長問起承辦人，我差點下不了台。企劃是新老師打的字沒錯，但方向、人脈、流程都是我教的。先在群組把話講在前面，免得他亂說。',
+          feel:'看到「熬了好幾個晚上」，手直接發抖，那三個晚上明明是我。可是在群組裡跟資深老師硬碰硬，我承受得了嗎？',
+          best:'大家辛苦了！企劃能被校長肯定真的很開心。這次我負責寫企劃和通知單，王老師幫忙看過、給了很多建議，謝謝王老師。活動當天我們一起加油！',
+          why:{ o:'先感謝、肯定王老師的建議，給她面子。', p:'用一句平靜的事實說出「我負責寫企劃」，讓大家知道分工。', s:'不爭吵、不翻舊帳，留下紀錄就好，你不用在群組裡打一場仗。' }
+        } },
+
+      /* ---------- 第 2 回合：王老師私訊 ---------- */
+      { t:'20:10', th:'wang',
+        items:[
+          { text:'你剛剛在群組那樣講，是什麼意思？', when:{ r:0, d:'p' } },
+          { text:'剛剛謝謝你捧場喔😊', when:{ r:0, d:'o' } },
+          { text:'剛剛群組怎麼那麼冷淡？', when:{ r:0, d:'s' } },
+          '校長今天怎麼會問承辦人的事？你跟校長說了什麼？','我跟你說，企劃的方向本來就是我開會時提的','你只是幫忙打字整理，這個大家都知道','下次活動的成果報告，也麻煩你整理一下喔，你比較會用電腦😊'],
+        chase:'？',
+        opts:[
+          { d:'o', t:'王老師，我沒有跟校長說什麼。成果報告我來整理就好。',
+            re:['你人真好😊','報告寫好傳給我，我再上台報告就好。'] },
+          { d:'s', t:'王老師，我沒有跟校長說什麼。只是我最近事情比較多，成果報告可能沒辦法。',
+            re:['喔～企劃都寫了，報告不行？','算了，我找別人。'] },
+          { d:'p', t:'王老師，承辦人是照慣例填的。企劃從流程、分組到通知單都是我寫的，成果報告我可以做，但報告上希望寫清楚分工。',
+            re:['分工？你這樣講就見外了。','我在這學校二十年，還需要搶你一個新老師的功勞？'] }
+        ],
+        timeout:['已讀不回？😅','好啊，有個性。'],
+        tpl:{
+          inner:'校長突然問承辦人，一定是新老師去講的。新人就是要磨，我帶過的新人都是這樣過來的，幫大家做事本來就應該，計較什麼功勞？',
+          feel:'我根本沒去找校長，承辦人本來就是照慣例填的！「只是幫忙打字」這幾個字，比搶功勞本身還傷人。',
+          best:'王老師，承辦人是照慣例填的，我沒有跟校長說什麼。謝謝您開會時給的方向，這份企劃從流程、分組到通知單是我寫的，所以我也有點在意大家怎麼看。成果報告我可以一起做，不過想請我們在報告上寫清楚分工，以後大家要找誰問細節也比較清楚。',
+          why:{ o:'先承認她給過方向，讓她有台階下。', p:'先澄清承辦人是照慣例，再把「分工寫清楚」講成實務需要，而不是指控。', s:'願意一起做，但不再一個人包辦，報告上也留下你的名字。' }
+        } },
+
+      /* ---------- 第 3 回合：主任來電 ---------- */
+      { t:'20:25', th:'boss',
+        items:['老師，方便講個電話嗎？'],
+        call:{ from:'陳主任', av:'🧑‍💼', voice:{ rate:1.45, pitch:0.85, g:'m' },
+          p1:['喂，老師，我陳主任，這麼晚打擾一下。','我剛剛聽王老師說，你到處跟人說企劃是你寫的？',
+            '她說連校長都跑去問她承辦人是誰。',
+            { text:'她覺得一定是你去跟校長講的。', when:{ r:0, d:'o' } },
+            { text:'她覺得一定是你去跟校長講的。', when:{ r:0, d:'s' } },
+            { text:'你還在群組裡講？', when:{ r:0, d:'p' } },
+            { text:'還要她在報告上寫分工？', when:{ r:1, d:'p' } },
+            '老師，你才來第二年，王老師在這裡二十年了，很多事情都是她帶著你做，你要懂得做人。','這種事傳出去，大家會覺得你不尊重前輩、在搶別人功勞，這對你不好。'],
+          opts:[
+            { d:'o', t:'主任對不起，是我不懂事，我明天跟王老師道歉。',
+              p2:['這樣就對了。','年輕人吃點虧沒關係，以後大家會記得你的。'] },
+            { d:'s', t:'主任，我不想再處理這件事了，你們怎麼說都可以。',
+              p2:['什麼叫我們怎麼說都可以？','……好，那你自己想清楚。'] },
+            { d:'p', t:'主任，企劃確實是我寫的，我有檔案和寄給王老師的紀錄。我沒有要搶功勞，只是希望分工被正確看見。',
+              p2:['……有紀錄喔。','好，我知道了。不過講話方式還是要注意，不要讓前輩下不了台。'] }
+          ],
+          to:['老師？你有在聽嗎？','……我們明天再談。'],
+          miss:['老師，不方便接嗎？',{ text:'王老師很難過，說被新老師當眾打臉', when:{ r:0, d:'p' } },{ text:'王老師很難過，說新老師在背後講她', when:{ r:0, d:'o' } },{ text:'王老師很難過，說新老師在背後講她', when:{ r:0, d:'s' } },{ unsend:'你是不是覺得自己很厲害？' },'辦公室要和諧，你懂吧','明天早上來找我一下。'] },
+        tpl:{
+          inner:'我不想辦公室吵起來。王老師資深、人脈廣，惹毛她以後很多事推不動。新老師退一步，最省事。',
+          feel:'被誤會最難受：我什麼都沒去講，現在變成我在搶功勞。主任連問都沒問，就先站到王老師那邊。',
+          best:'主任，謝謝您先打來跟我說。王老師帶過我很多，我很感謝。通知單的承辦人是照慣例填的，我沒有去跟校長講什麼；企劃確實是我寫的，我有寄給王老師的紀錄可以給您看。明天我也會找王老師聊聊，把話說開。',
+          why:{ o:'先謝謝主任、肯定王老師的照顧，降低「不尊重前輩」的印象。', p:'平靜地說明承辦人是慣例、我有紀錄。被誤會時，事實是最好的保護。', s:'主動提出「我會找王老師聊」，讓事情回到你們兩個之間，不在主任面前繼續拉扯。' }
+        } },
+
+      /* ---------- 第 4 回合：群組指桑罵槐 ---------- */
+      { t:'20:40', th:'main',
+        items:[W('跟大家分享一篇文章〈職場新人最該學會的事：謙虛〉'),W('有些人很會做表面功夫，但做人比做事重要喔😊'),L('👍'),W('我不是在說誰喔，大家不要對號入座～')],
+        chase:W('😊'),
+        opts:[
+          { d:'o', t:'謝謝王老師分享，受教了🙏',
+            re:[W('孺子可教😊')] },
+          { d:'s', t:'各位，明天要交的學習紀錄記得喔～',
+            re:[L('收到'),W('轉移話題很快喔😂')] },
+          { d:'p', t:'王老師，如果是在說我，我們可以私下談。群組是大家的，我不想讓其他老師為難。',
+            re:[W('我又沒指名道姓，你這麼緊張幹嘛😅'),C('……')] }
+        ],
+        timeout:[W('沒人回～大家都很忙呢😊')],
+        tpl:{ who:'王老師',
+          inner:'在群組講，大家就知道誰說了算。新人要是不服，就讓他知道這裡的規矩。',
+          feel:'指桑罵槐最噁心的地方是：回了就是對號入座，不回就是默認。全辦公室都在看。',
+          best:'謝謝王老師分享。這次親子活動能順利，是大家一起努力的結果。如果我之前哪裡說得讓您不舒服，我們可以私下聊聊，我很願意把話說開。',
+          why:{ o:'用「謝謝分享」「大家一起努力」接住，不讓群組變戰場。', p:'把衝突移到私下，不在公開場合互相攻擊，也不默認指控。', s:'一句話就收，不逐句辯解，保住你的晚上和心力。' }
+        } },
+
+      /* ---------- 第 5 回合：王老師語音 ---------- */
+      { t:'21:00', th:'wang',
+        items:[
+          { voice:{ d:'0:41', text:'欸，我跟你說，我不是要搶你什麼。我在這學校這麼久，什麼沒做過？我只是覺得新人要多磨練。你這樣讓我在主任面前很難做人，大家以後還要一起工作耶……' } },
+          '所以明天的會議，你幫我說一下企劃是「我們一起」做的，好不好？','這樣大家都好看😊'],
+        chase:'？',
+        opts:[
+          { d:'o', t:'好，明天我會說是我們一起做的。',
+            re:['這樣就對了😊','以後有好的機會，我會想到你的。'] },
+          { d:'s', t:'王老師，明天會議我就不發言了，您怎麼說都可以。',
+            re:['不發言？那大家會怎麼想我？','你就是要讓我難看就對了。'] },
+          { d:'p', t:'王老師，我可以說您給了很多建議，但企劃是我寫的，這點我沒辦法說成別的。',
+            re:['……你真的很固執。','好，那就明天會上見。'] }
+        ],
+        timeout:['不回就是答應囉😊','明天會議別忘了。'],
+        tpl:{
+          inner:'我也知道企劃不是我寫的。可是校長都稱讚了，現在改口，我的面子往哪擺？只要新人幫我圓一下，事情就過去了。',
+          feel:'聽完語音，竟然有一點心軟：她也有她的難處。可是「我們一起做的」，等於要我親口把功勞送出去。',
+          best:'王老師，我知道這件事讓您在主任面前很為難，我也不想讓您難看。明天會議上，我會說這次企劃由我執筆，王老師給了很多方向和建議，是我們一起合作的成果。這樣是事實，也不會讓任何人下不了台，您覺得可以嗎？',
+          why:{ o:'說出她的為難，並主動給她一個保有面子的說法。', p:'「由我執筆、王老師給建議」是事實，不用說謊。', s:'先把話講好，明天會議上不用臨場應付，也不會再被要求更多。' }
+        } },
+
+      /* ---------- 第 6 回合：主任收尾 ---------- */
+      { t:'21:20', th:'boss',
+        items:['老師，王老師跟我說你們聊過了',
+          { text:'你願意退一步，很好。', when:{ r:4, d:'o' } },
+          { text:'她說你明天不發言？', when:{ r:4, d:'s' } },
+          { text:'她說你還是很堅持。', when:{ r:4, d:'p' } },
+          '明天會議你不用特別說明了，我來講一句「大家合作」就好','另外，下學期的親子活動，你就跟著王老師學，她會帶你😊'],
+        chase:{ typing:true },
+        opts:[
+          { d:'o', t:'好的主任，我會好好跟王老師學。',
+            re:['很好，辦公室和諧最重要。','王老師也說你很聽話😊'] },
+          { d:'s', t:'主任，下學期的活動我想先不參與，我需要一點時間。',
+            re:['不參與？活動大家都要參與。','……好吧，我再看看。'] },
+          { d:'p', t:'主任，下學期我很願意參與，但想跟王老師分工合寫，企劃上寫清楚各自負責的部分。',
+            re:['分工合寫……','好，我跟王老師說說看。'] }
+        ],
+        timeout:['不回就當你同意了😊','早點休息。'],
+        tpl:{
+          inner:'讓新老師跟著王老師，一來安撫王老師，二來新老師也會乖一點。我不用選邊站。',
+          feel:'原來「辦公室和諧」的代價是我。可是下學期還要一起工作，撕破臉對我更不利。',
+          best:'謝謝主任幫忙處理。下學期的活動我很願意參與，也想多跟王老師學；只是這次讓我覺得分工寫清楚對大家都好，能不能從企劃開始就寫上各自負責的部分？這樣王老師也不會再被誤會。',
+          why:{ o:'答應參與、願意學，讓主任的「和諧」有交代。', p:'提出制度性的做法：一開始就寫分工，以後不用再吵功勞。', s:'用「王老師也不會被誤會」包裝你的自我保護，對方比較難拒絕。' }
+        } }
+    ],
+
+    endings:{
+      o:{ n:'辦公室的好幫手',
+        t:'你道歉、幫忙圓說法、跟著王老師學，辦公室很和諧，王老師逢人就說你很乖。下學期的企劃、成果報告、上台簡報的講稿都是你寫的，台上報告的還是王老師。某天你翻到三年前的檔案，發現自己做過的事，連自己都記不太清楚了。',
+        items:[{ div:'三個月後', th:'wang' },{ text:'下學期的企劃也麻煩你囉😊', th:'wang' }] },
+      s:{ n:'隱形人',
+        t:'你沒有吵、也沒有爭，把晚上留給自己。事情慢慢沒人提了，但從那天起，你在辦公室變得很安靜。會議上你的提案沒有人接話，群組裡你的訊息只剩已讀。你保護了自己，也慢慢把自己藏起來了。',
+        items:[W('明天的會議大家準時喔～')] },
+      p:{ n:'有紀錄的人',
+        t:'你每一步都拿出證據，功勞最後確實回到你身上。可是聚餐沒人約你，王老師見到你就轉頭，主任說你「很難溝通」。你是對的，只是對得有點孤單。',
+        items:[L('那個……聚餐的事我私訊大家喔')] },
+      os:{ n:'看臉色的人',
+        t:'王老師兇你就讓，主任一打電話你就躲。功勞沒拿回來，關係也沒有變好。你開始習慣在群組裡打了一大段又刪掉，最後只留一個貼圖。',
+        items:[W('大家晚安～😊')] },
+      op:{ n:'累壞的和事佬',
+        t:'你又要顧王老師的面子，又要把事實講清楚，每個人的情緒你都接住了。事情圓滿落幕，你卻失眠了一整個禮拜，夢裡都在改群組訊息的措辭。',
+        items:[{ text:'謝謝你這麼體諒😊', th:'wang' }] },
+      sp:{ n:'冷靜的局外人',
+        t:'你守住事實，也守住自己的時間，但不再為辦公室多付出。你不吃虧了，可是也沒有人再找你合作。下學期的活動辦得熱熱鬧鬧，跟你沒什麼關係。',
+        items:[W('下學期的活動，我們找有空的人就好😊')] },
+      h:{ n:'被看見的新老師', hidden:true,
+        t:'你讓過一步，也堅持過一次，還有一次只想關掉手機。隔天會議上，主任說：「這次企劃由我們最年輕的老師執筆，王老師指導。」散會時，林老師小聲跟你說：「其實大家都知道是你寫的。」',
+        items:[W('明天會議見。'),{ wait:1600 },L('這次企劃寫得很好，辛苦了👍')] }
+    }
+  };
+})();
+
+/* ================================================================
+   插畫頭像（取代 emoji，各裝置長得一樣）
+   資料裡的 emoji 會自動對應到這裡的角色
+   ================================================================ */
+var AV_FACE = '<ellipse cx="32" cy="31" rx="12.5" ry="14" fill="#f5d0b0"/><circle cx="19.6" cy="32.5" r="2.6" fill="#f0c3a0"/><circle cx="44.4" cy="32.5" r="2.6" fill="#f0c3a0"/>';
+var AV_NECK = '<rect x="28" y="41" width="8" height="8" fill="#ecc19f"/>';
+var AV_EYES = '<circle cx="27" cy="32" r="1.6" fill="#3b2a20"/><circle cx="37" cy="32" r="1.6" fill="#3b2a20"/>';
+var AV_CHEEK = '<circle cx="24.3" cy="36.6" r="2.3" fill="#f0a08a" opacity=".45"/><circle cx="39.7" cy="36.6" r="2.3" fill="#f0a08a" opacity=".45"/>';
+function avShoulder(c){ return '<path d="M8 64 C10 51 20 47 32 47 C44 47 54 51 56 64 Z" fill="'+c+'"/>'; }
+function avBg(c){ return '<circle cx="32" cy="32" r="32" fill="'+c+'"/>'; }
+function st(w){ return ' stroke="#3b2a20" stroke-width="'+(w || 1.7)+'" stroke-linecap="round" fill="none"'; }
+var ST = st();
+var AV = {
+  /* 宇振媽媽：及肩髮、擔心的眉毛 */
+  mom1: avBg('#f6cdbd')+'<path d="M17 31 C17 17 24 11.5 32 11.5 C40 11.5 47 17 47 31 L48 48 C44 48 42 45 42 41 L22 41 C22 45 20 48 16 48 Z" fill="#4a2e22"/>'+avShoulder('#d9776b')+AV_NECK+AV_FACE+
+    '<path d="M19.5 29 C20 20 26 16.5 32 16.5 C38 16.5 44 20 44.5 29 C40 25 36 23 31 23 C27 24 23 26 19.5 29 Z" fill="#4a2e22"/>'+AV_EYES+AV_CHEEK+
+    '<path d="M23.5 27.6 L29 26"'+ST+'/><path d="M35 26 L40.5 27.6"'+ST+'/><path d="M28.5 40.2 Q32 38.4 35.5 40.2"'+ST+'/>',
+  /* 阿凱媽媽：包頭、不太高興 */
+  mom2: avBg('#d8e6cc')+'<circle cx="32" cy="11.5" r="6.2" fill="#2e2420"/>'+avShoulder('#7a9a6a')+AV_NECK+AV_FACE+
+    '<path d="M19.5 31 C19 19 25 15 32 15 C39 15 45 19 44.5 31 C42 24 37 21 32 21 C27 21 22 24 19.5 31 Z" fill="#2e2420"/>'+AV_EYES+AV_CHEEK+
+    '<path d="M23.5 26.4 L29 27.6"'+ST+'/><path d="M35 27.6 L40.5 26.4"'+ST+'/><path d="M29 40.2 L35 40.2"'+ST+'/><circle cx="19.6" cy="37" r="1.5" fill="#e9b44c"/><circle cx="44.4" cy="37" r="1.5" fill="#e9b44c"/>',
+  /* 子芸爸爸：短髮、眼鏡、生氣 */
+  dad: avBg('#cfdbe7')+avShoulder('#5a7aa0')+AV_NECK+AV_FACE+
+    '<path d="M21 36 C22 44 27 45.5 32 45.5 C37 45.5 42 44 43 36 C41 41.5 37 42.5 32 42.5 C27 42.5 23 41.5 21 36 Z" fill="#3b2a20" opacity=".1"/>'+
+    '<path d="M19.5 30 C19 19 25 15.5 32 15.5 C40 15.5 45 19.5 44.5 30 C43 25 41 22 38 21 C34 23 27 23 22 22.5 C21 25 20 27 19.5 30 Z" fill="#2b2420"/>'+AV_EYES+
+    '<circle cx="27" cy="32" r="4.3" stroke="#3b2a20" stroke-width="1.3" fill="none"/><circle cx="37" cy="32" r="4.3" stroke="#3b2a20" stroke-width="1.3" fill="none"/><path d="M31.3 32 L32.7 32" stroke="#3b2a20" stroke-width="1.3"/>'+
+    '<path d="M23 26.4 L29.2 27.9"'+st(2)+'/><path d="M34.8 27.9 L41 26.4"'+st(2)+'/><path d="M28.5 40.8 Q32 38.6 35.5 40.8"'+ST+'/>',
+  /* 陳主任：西裝、領帶、方框眼鏡、嚴肅 */
+  boss: avBg('#e4d8c9')+avShoulder('#3f4b5c')+'<path d="M26.5 47 L32 57 L37.5 47 Z" fill="#fff"/><path d="M30.6 48 L33.4 48 L34.3 58.5 L32 61 L29.7 58.5 Z" fill="#c8604f"/>'+AV_NECK.replace('height="8"','height="6"')+AV_FACE+
+    '<path d="M19.5 30 C19 18 26 15 33 15 C41 15 45.5 20 44.5 30 C43 24 40 21.5 35 21 C30 21.5 25 22 21.5 25 C20.5 27 20 28.5 19.5 30 Z" fill="#3d3733"/><path d="M35 15.5 C39 16.5 42 18.5 43.5 22" stroke="#9a9590" stroke-width="1.6" fill="none" stroke-linecap="round"/>'+AV_EYES+
+    '<rect x="22.6" y="29.2" width="8.6" height="5.8" rx="1.6" stroke="#3b2a20" stroke-width="1.3" fill="none"/><rect x="32.8" y="29.2" width="8.6" height="5.8" rx="1.6" stroke="#3b2a20" stroke-width="1.3" fill="none"/>'+
+    '<path d="M23 26.1 L29.6 27.4"'+st(2.1)+'/><path d="M34.4 27.4 L41 26.1"'+st(2.1)+'/><path d="M28.6 40.3 L35.4 40.3"'+ST+'/>',
+  /* 王老師：燙捲髮、珍珠耳環、招牌假笑 */
+  wang: avBg('#f3d2d8')+
+    '<g fill="#5a3426"><circle cx="20" cy="31" r="5"/><circle cx="19" cy="24" r="5"/><circle cx="23" cy="17.5" r="5.5"/><circle cx="30" cy="13.8" r="6"/><circle cx="38" cy="14.2" r="6"/><circle cx="44.2" cy="19" r="5.5"/><circle cx="46" cy="26" r="5"/><circle cx="45" cy="33" r="4.6"/><circle cx="18.8" cy="36.5" r="4"/><circle cx="45.4" cy="38" r="3.8"/></g>'+
+    avShoulder('#b85c6e')+AV_NECK+AV_FACE+
+    '<g fill="#5a3426"><circle cx="24.5" cy="20.5" r="4.2"/><circle cx="31" cy="18.6" r="4.4"/><circle cx="37.6" cy="19.6" r="4.2"/><circle cx="42" cy="23" r="3.2"/><circle cx="21.6" cy="24" r="3"/></g>'+AV_CHEEK+
+    '<path d="M24.4 32 Q27 29.6 29.6 32"'+ST+'/><path d="M34.4 32 Q37 29.6 39.6 32"'+ST+'/><path d="M24 27 Q27 25.4 30 26.8"'+st(1.4)+'/><path d="M34 26.8 Q37 25.4 40 27"'+st(1.4)+'/>'+
+    '<path d="M26.4 38.4 Q32 45 37.6 38.4 Q32 40.6 26.4 38.4 Z" fill="#c8473a"/><circle cx="19.6" cy="37.4" r="1.7" fill="#fffaf0" stroke="#d8c2a8" stroke-width=".6"/><circle cx="44.4" cy="37.4" r="1.7" fill="#fffaf0" stroke="#d8c2a8" stroke-width=".6"/>'+
+    '<g fill="#fffaf0"><circle cx="27" cy="50.5" r="1.3"/><circle cx="29.5" cy="52" r="1.3"/><circle cx="32" cy="52.5" r="1.3"/><circle cx="34.5" cy="52" r="1.3"/><circle cx="37" cy="50.5" r="1.3"/></g>',
+  /* 林老師：馬尾、溫和 */
+  lin: avBg('#d4ebe2')+'<path d="M42 21 C51 21 54 32 50.5 43 C48 37 46 32 42.5 29.5 Z" fill="#3b2a20"/>'+avShoulder('#6aa38f')+AV_NECK+AV_FACE+
+    '<path d="M19.5 31 C19 19 25 15 32 15 C39 15 45 19 44.5 31 C43 25 39 21.5 33 21 C28 21.5 23 24 19.5 31 Z" fill="#3b2a20"/>'+AV_EYES+AV_CHEEK+
+    '<path d="M24 27 Q26.8 25.8 29.4 26.8"'+st(1.4)+'/><path d="M34.6 26.8 Q37.2 25.8 40 27"'+st(1.4)+'/><path d="M28.5 39 Q32 42 35.5 39"'+ST+'/>',
+  /* 陳老師：短髮、看熱鬧 */
+  chen: avBg('#ecdfc6')+avShoulder('#a88d77')+AV_NECK+AV_FACE+
+    '<path d="M19.6 29.5 C19.5 19 25 15.5 32 15.5 C39 15.5 44.6 19 44.4 29.5 C42 23.5 38 21.5 32 21.5 C26 21.5 22 23.5 19.6 29.5 Z" fill="#4a3a2e"/>'+AV_EYES+
+    '<path d="M24 27.2 L29.2 27.2"'+st(1.5)+'/><path d="M34.8 27.2 L40 27.2"'+st(1.5)+'/><path d="M29.5 40.3 Q32 41.2 34.5 40.3"'+ST+'/>',
+  /* 群組 */
+  group: avBg('#f2dcbf')+'<path d="M14 22 Q14 15 21 15 H39 Q46 15 46 22 V31 Q46 38 39 38 H27 L19.5 44 L21 38 Q14 37.5 14 31 Z" fill="#e9862c"/>'+
+    '<path d="M30 33 Q30 28 35 28 H46 Q51 28 51 33 V39 Q51 44 46 44 L47 49 L41.5 44 H35 Q30 44 30 39 Z" fill="#fffaf3" stroke="#3b2a20" stroke-width="1.2"/>'+
+    '<g fill="#fffaf3"><circle cx="23" cy="26.5" r="1.8"/><circle cx="30" cy="26.5" r="1.8"/><circle cx="37" cy="26.5" r="1.8"/></g>'
+};
+var AV_EMOJI = { '👩':'mom1', '🧕':'mom2', '👨':'dad', '🧑‍💼':'boss', '👩‍🏫':'wang', '🧑‍🏫':'lin', '👨‍🏫':'chen', '💬':'group' };
+function avKey(v){ return AV[v] ? v : AV_EMOJI[v]; }
+/* 頁面上用 <use> 引用同一份圖，節省記憶體 */
+function avh(v){
+  var k = avKey(v);
+  if (!k) return esc(v || '');
+  return '<svg class="avs" viewBox="0 0 64 64" aria-hidden="true"><use href="#av-'+k+'"/></svg>';
+}
+function avSvgString(v){ var k = avKey(v); return k ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="128" height="128">'+AV[k]+'</svg>' : null; }
+(function(){
+  var s = '<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">';
+  for (var k in AV) s += '<symbol id="av-'+k+'" viewBox="0 0 64 64">'+AV[k]+'</symbol>';
+  document.body.insertAdjacentHTML('afterbegin', s + '</svg>');
+})();
+
+/* ================================================================
+   主視覺：深夜的書桌（檯燈、聯絡簿、紅筆、冷掉的咖啡、亮起來的手機）
+   ================================================================ */
+var DESK_SVG =
+'<svg class="desk" viewBox="20 30 580 490" role="img" aria-label="深夜的書桌上，檯燈亮著，手機跳出家長的訊息">'+
+'<defs>'+
+  '<radialGradient id="dkPool" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffbf6e" stop-opacity=".55"/><stop offset=".6" stop-color="#ffa64d" stop-opacity=".18"/><stop offset="1" stop-color="#ffa64d" stop-opacity="0"/></radialGradient>'+
+  '<linearGradient id="dkCone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd59a" stop-opacity=".62"/><stop offset="1" stop-color="#ffd59a" stop-opacity="0"/></linearGradient>'+
+  '<linearGradient id="dkWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7d5239"/><stop offset="1" stop-color="#4a2f20"/></linearGradient>'+
+  '<radialGradient id="dkScr" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#fffaf1"/><stop offset="1" stop-color="#ffe3bd"/></radialGradient>'+
+  '<radialGradient id="dkHalo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffd69e" stop-opacity=".75"/><stop offset="1" stop-color="#ffd69e" stop-opacity="0"/></radialGradient>'+
+'<radialGradient id="dkFadeG" cx="50%" cy="55%" r="62%"><stop offset=".68" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="dkFade" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="520"><rect x="0" y="0" width="600" height="520" fill="url(#dkFadeG)"/></mask>'+
+'</defs><g mask="url(#dkFade)">'+
+/* 牆上：時鐘、便利貼 */
+'<g class="dk-clock" transform="translate(468 92)"><circle r="34" fill="#f3e3cc" stroke="#2a1b12" stroke-width="5"/><circle r="2.6" fill="#2a1b12"/><path d="M0 0 L-17 0" stroke="#2a1b12" stroke-width="4" stroke-linecap="round"/><path d="M0 0 L2 -24" stroke="#2a1b12" stroke-width="2.6" stroke-linecap="round"/></g>'+
+'<g transform="translate(338 74) rotate(5)"><rect width="112" height="98" rx="3" fill="#ffd98a"/><rect width="112" height="14" fill="#f4c66a"/><circle cx="56" cy="5" r="5" fill="#c8473a"/>'+
+  '<text x="14" y="42" font-size="17" fill="#6b4a2a" font-family="LXGW WenKai TC,Kaiti TC,serif">學習紀錄</text><text x="14" y="68" font-size="17" fill="#c8473a" font-family="LXGW WenKai TC,Kaiti TC,serif">週五交！</text></g>'+
+'<g transform="translate(262 108) rotate(-6)"><rect width="74" height="64" rx="3" fill="#f6c3b3"/><text x="10" y="36" font-size="14" fill="#7a3f30" font-family="LXGW WenKai TC,Kaiti TC,serif">家長日</text><text x="10" y="54" font-size="12" fill="#7a3f30" font-family="LXGW WenKai TC,Kaiti TC,serif">下週三</text></g>'+
+/* 燈光 */
+'<ellipse class="dk-pool" cx="270" cy="395" rx="290" ry="135" fill="url(#dkPool)"/>'+
+'<path class="dk-cone" d="M196 196 L304 220 L470 430 L40 430 Z" fill="url(#dkCone)"/>'+
+/* 桌子 */
+'<path d="M0 334 H600 V520 H0 Z" fill="url(#dkWood)"/><rect y="326" width="600" height="12" rx="3" fill="#9a6a4b"/>'+
+'<ellipse cx="260" cy="408" rx="230" ry="62" fill="#ffc47a" opacity=".18"/>'+
+/* 檯燈 */
+'<ellipse cx="108" cy="356" rx="54" ry="13" fill="#24170f"/><rect x="72" y="340" width="72" height="16" rx="8" fill="#3a271b"/>'+
+'<path d="M108 344 L150 214 L226 152" stroke="#3a271b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="150" cy="214" r="8" fill="#5a3d2a"/>'+
+'<path d="M216 126 L262 140 L306 216 Q252 230 194 196 Z" fill="#d9772a"/><path d="M216 126 L262 140 L270 154 Q240 150 212 142 Z" fill="#b85f1c"/>'+
+'<ellipse class="dk-bulb" cx="250" cy="207" rx="50" ry="13" fill="#fff4d8" transform="rotate(16 250 207)"/>'+
+/* 冷掉的咖啡 */
+'<ellipse cx="490" cy="352" rx="40" ry="9" fill="#2a1b12" opacity=".35"/><path d="M458 296 H522 V344 Q522 356 490 356 Q458 356 458 344 Z" fill="#efe1cf"/><ellipse cx="490" cy="296" rx="32" ry="8" fill="#e2cfb8"/><ellipse cx="490" cy="297" rx="27" ry="5.5" fill="#5b3a26"/>'+
+'<path d="M522 306 Q542 308 540 324 Q538 338 522 336" stroke="#efe1cf" stroke-width="7" fill="none"/><path d="M466 318 H514" stroke="#d9776b" stroke-width="5" opacity=".7"/>'+
+/* 聯絡簿 */
+'<g transform="translate(118 372) rotate(-5)"><rect x="-8" y="-6" width="292" height="108" rx="6" fill="#3f6d80"/>'+
+  '<path d="M0 0 H136 V96 H0 Z" fill="#fdf6e8"/><path d="M140 0 H276 V96 H140 Z" fill="#fffaf1"/><path d="M138 -2 V98" stroke="#d9c6aa" stroke-width="3"/>'+
+  '<g stroke="#e3d0b4" stroke-width="1.6"><path d="M12 22 H124"/><path d="M12 40 H124"/><path d="M12 58 H124"/><path d="M12 76 H124"/><path d="M152 22 H264"/><path d="M152 40 H264"/><path d="M152 58 H264"/><path d="M152 76 H264"/></g>'+
+  '<text x="14" y="18" font-size="12" fill="#6b4a2a" font-family="LXGW WenKai TC,Kaiti TC,serif">今天下午擦傷，已擦藥</text>'+
+  '<path d="M160 34 l6 6 l12 -14" stroke="#c8473a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M160 70 l6 6 l12 -14" stroke="#c8473a" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+  '<text x="190" y="54" font-size="12" fill="#c8473a" font-family="LXGW WenKai TC,Kaiti TC,serif">家長簽名</text></g>'+
+/* 紅筆 */
+'<g transform="translate(230 474) rotate(-22)"><rect width="128" height="10" rx="5" fill="#c8473a"/><rect x="96" width="32" height="10" rx="5" fill="#8f2d24"/><path d="M0 0 L-14 5 L0 10 Z" fill="#f3e3cc"/></g>'+
+/* 手機（亮起來、震動） */
+'<ellipse class="dk-halo" cx="452" cy="420" rx="120" ry="96" fill="url(#dkHalo)"/>'+
+'<g class="dk-phone"><g transform="translate(452 420) rotate(-12)">'+
+  '<rect x="-56" y="-96" width="112" height="192" rx="18" fill="#1b120c"/><rect x="-49" y="-88" width="98" height="176" rx="13" fill="url(#dkScr)"/>'+
+  '<text x="0" y="-52" text-anchor="middle" font-size="26" font-weight="500" fill="#4a3326" font-family="DM Mono,monospace">21:02</text>'+
+  '<rect x="-43" y="-30" width="86" height="48" rx="10" fill="#3b2a20"/><circle cx="-29" cy="-6" r="9" fill="#f6cdbd"/>'+
+  '<text x="-16" y="-10" font-size="9.5" font-weight="700" fill="#ffcf94" font-family="Noto Sans TC,sans-serif">宇振媽媽</text><text x="-16" y="5" font-size="8.5" fill="#fff3e3" font-family="Noto Sans TC,sans-serif">老師您好，不好…</text>'+
+  '<rect x="-43" y="24" width="86" height="30" rx="9" fill="#3b2a20" opacity=".55"/><text x="-34" y="43" font-size="8.5" fill="#fff3e3" font-family="Noto Sans TC,sans-serif">＋4 則新訊息</text>'+
+'</g></g>'+
+'<g class="dk-wave" stroke="#ffd59a" stroke-width="4" stroke-linecap="round" fill="none"><path d="M548 352 q12 14 4 30"/><path d="M566 340 q18 22 6 48"/><path d="M362 448 q-12 -14 -4 -30"/><path d="M344 460 q-18 -22 -6 -48"/></g>'+
+'</g></svg>';
+
+/* ================================================================
+   《老師，在嗎？》引擎 v4：固定 6 回合、傾向計分、7 種結局、八面玲瓏範本頁
+   ================================================================ */
+var STATS_URL = 'https://script.google.com/macros/s/AKfycbyT-H4JFUabemVr5Cz_4YwJMaFE67m9Tn9QjtO__li1pm7-606TgjDrBRtybRoEtqDP/exec';
+var TOOL_NAME = '老師，在嗎？';
+var SITE_URL = 'https://education-writing-ai.netlify.app/';
+var IG_URL = 'https://www.instagram.com/education_writing/';
+var IG_HANDLE = '@education_writing';
+var CFG = { reply:20, chase:10, ring:3 };
+var ORDER = ['parent','boss','col'];
+var DIR = { o:'顧對方', s:'顧自己', p:'守原則' };
+var TPL_INTRO = '下面的「八面玲瓏回法」，是冷靜下來、有時間慢慢想才寫得出來的。晚上九點、手機一直震、20 秒內要回，做不到很正常。我們都是人，都有情緒。這份範本不是要你每次都完美，而是讓你下次多一個選項。';
+var TPL_OUTRO = '覺得「哪有可能每次都這樣回」？沒關係，沒有人做得到。能在顧對方、顧自己、守原則之間多停一秒，就已經很好了。照顧好孩子之前，也記得照顧好自己。';
+
+/* ---------------- 使用統計（沿用引路人其他遊戲的計數） ---------------- */
+(function trackVisit(){
+  if (!STATS_URL || STATS_URL.indexOf('http') !== 0) return;
+  var url = STATS_URL + '?tool=' + encodeURIComponent(TOOL_NAME);
+  try { if (navigator.sendBeacon && navigator.sendBeacon(url)) return; } catch(e){}
+  try { fetch(url, { method:'GET', mode:'no-cors', keepalive:true }).catch(function(){}); }
+  catch(e){ try { new Image().src = url + '&t=' + Date.now(); } catch(e2){} }
+})();
+
+/* ---------------- 圖示 ---------------- */
+var ICONS = {
+  chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
+  speaker:'<path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>',
+  mute:'<path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',
+  back:'<path d="m15 18-6-6 6-6"/>',
+  send:'<path d="M5 12h13"/><path d="m12 5 7 7-7 7"/>',
+  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  missed:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/><path d="m15 3 6 6M21 3l-6 6"/>',
+  signal:'<path d="M4 18v-2M9 18v-5M14 18v-8M19 18V6"/>',
+  wifi:'<path d="M2 9a15 15 0 0 1 20 0"/><path d="M5.5 12.5a10 10 0 0 1 13 0"/><path d="M9 16a5 5 0 0 1 6 0"/><path d="M12 19.5h.01"/>',
+  battery:'<rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2"/><path d="M5 10h9v4H5z" fill="currentColor"/>',
+  arrow:'<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+  down:'<path d="M12 5v14"/><path d="m6 13 6 6 6-6"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  layers:'<path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 13 9 5 9-5"/>'
+};
+function ico(n, cls){ return '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"'+(cls?' class="'+cls+'"':'')+'>'+(ICONS[n]||'')+'</svg>'; }
+
+/* ---------------- 小工具 ---------------- */
+var T = { cd:null, ring:null, clock:null, speech:null, banner:null, nudge:null };
+var AUDIO = { ctx:null, on:true };
+var LAST = {};   /* 這次開網頁後的遊玩紀錄，給範本頁對照「你剛剛的回法」 */
+function $(id){ return document.getElementById(id); }
+function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+function alive(tok){ return G && tok === G.tok; }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+function rm(el){ if (el && el.parentNode) el.parentNode.removeChild(el); }
+function toast(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove('on'); }, 1900); }
+function shuffle(a){ for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function addMin(t, m){ if (!m || !/^\d\d:\d\d$/.test(t)) return t; var p = t.split(':'), v = (+p[0] * 60 + +p[1] + m) % 1440; return ('0' + Math.floor(v / 60)).slice(-2) + ':' + ('0' + v % 60).slice(-2); }
+function splitSentences(s){
+  var out = [], buf = '';
+  for (var i = 0; i < s.length; i++){ buf += s[i]; if ('，。？！…'.indexOf(s[i]) >= 0 && buf.length > 6){ out.push(buf); buf = ''; } }
+  if (buf.trim()) out.push(buf);
+  return out;
+}
+/* 中文斷句：把文字按標點切成一句一句，換行只發生在句與句之間，避免單字落單或從句子中間斷開 */
+var PUNCT = '，。、？！；：…～」』）)》,.!?';
+function ph(text){
+  var s = String(text), out = [], buf = '';
+  for (var i = 0; i < s.length; i++){
+    buf += s[i];
+    if (PUNCT.indexOf(s[i]) >= 0 && PUNCT.indexOf(s[i + 1] || '') < 0){ out.push(buf); buf = ''; }
+  }
+  if (buf) out.push(buf);
+  if (out.length > 1 && out[out.length - 1].length <= 2){ var tail = out.pop(); out[out.length - 1] += tail; }
+  return out.map(function(c){ return c.length > 16 ? pp(c) : '<span class="ph">' + esc(c) + '</span>'; }).join('');
+}
+/* 長段落：正常排滿，只把最後一小段黏在一起，避免最後一行只剩一兩個字 */
+function pp(text){
+  var t = String(text), P = '，。、？！；：';
+  /* 找最後一個句中標點，最後一句 10 字內就整句黏住；太長就只黏最後 3 個字 */
+  var end = t.length; while (end > 0 && PUNCT.indexOf(t[end - 1]) >= 0) end--;
+  var i = end - 1; while (i >= 0 && P.indexOf(t[i]) < 0) i--;
+  var cut = (t.length - (i + 1) <= 11 && i > 0) ? i + 1 : Math.max(0, end - 3);
+  return esc(t.slice(0, cut)) + '<span class="nw">' + esc(t.slice(cut)) + '</span>';
+}
+function itemText(it){ if (typeof it === 'string') return it; return it.text || it.unsend || (it.voice ? '🎤 語音訊息' : ''); }
+
+/* ---------------- 音效與語音 ---------------- */
+function audioUnlock(){
+  try {
+    if (!AUDIO.ctx){ var C = window.AudioContext || window.webkitAudioContext; if (C) AUDIO.ctx = new C(); }
+    if (AUDIO.ctx && AUDIO.ctx.state === 'suspended') AUDIO.ctx.resume();
+  } catch(e){}
+  try { if (window.speechSynthesis){ speechSynthesis.getVoices(); var u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } } catch(e){}
+}
+function beep(f, d, t0, g, type){
+  var c = AUDIO.ctx; if (!c || !AUDIO.on) return;
+  try {
+    var o = c.createOscillator(), v = c.createGain(), t = c.currentTime + (t0 || 0), gg = g || 0.08;
+    o.type = type || 'sine'; o.frequency.value = f;
+    v.gain.setValueAtTime(0, t); v.gain.linearRampToValueAtTime(gg, t + 0.015); v.gain.setValueAtTime(gg, t + Math.max(0.02, d - 0.03)); v.gain.linearRampToValueAtTime(0, t + d);
+    o.connect(v); v.connect(c.destination); o.start(t); o.stop(t + d + 0.03);
+  } catch(e){}
+}
+function sndKey(){ beep(988, 0.07, 0, 0.05); beep(1318, 0.09, 0.08, 0.05); }
+function sndSend(){ beep(520, 0.06, 0, 0.04); beep(880, 0.08, 0.05, 0.04); }
+function sndRing(){ for (var i = 0; i < 10; i++) beep(i % 2 ? 640 : 860, 0.07, i * 0.08, 0.08); }
+function sndHang(){ for (var i = 0; i < 3; i++) beep(480, 0.2, i * 0.36, 0.07); }
+function vibrate(p){ try { if (navigator.vibrate) navigator.vibrate(p); } catch(e){} }
+function buzz(){ var p = $('phone'); if (!p) return; p.classList.remove('buzz'); void p.offsetWidth; p.classList.add('buzz'); }
+function zhVoices(){ try { return speechSynthesis.getVoices().filter(function(v){ return /^(zh|cmn)/i.test(v.lang) || /Chinese|中文|國語|普通話/.test(v.name); }); } catch(e){ return []; } }
+function isNatural(v){ return !!v && /Natural|Neural|Online|Premium|Enhanced|加強|優化/i.test(v.name); }
+function isMale(v){ return !!v && /YunJhe|雲哲|Zhiwei|志偉|Male|男/i.test(v.name); }
+function scoreVoice(v, g){
+  var n = v.name + ' ' + v.lang, s = 0;
+  if (/TW|Taiwan|臺灣|台灣/i.test(n)) s += 50; else if (/HK|Hong|粵|yue/i.test(n)) s -= 40;
+  if (isNatural(v)) s += 30;
+  if (/Google/i.test(n)) s += 8;
+  if (/美佳|Meijia|HsiaoChen|HsiaoYu|曉臻|曉雨|Yating|雅婷|Female|女/i.test(n)) s += g === 'm' ? -12 : 12;
+  if (isMale(v)) s += g === 'm' ? 25 : -20;
+  return s;
+}
+function pickVoice(g){
+  var vs = zhVoices(); if (!vs.length) return null;
+  vs.sort(function(a, b){ return scoreVoice(b, g) - scoreVoice(a, g); });
+  return vs[0];
+}
+/* 逐句朗讀＋字幕；沒有語音或語音失敗時，自動改成字幕節奏 */
+function speakLines(lines, opt, onLine, onDone){
+  var i = 0, stopped = false, wd = null;
+  var useVoice = AUDIO.on && ('speechSynthesis' in window);
+  var voice = useVoice ? pickVoice(opt.g) : null;
+  try { if (useVoice) speechSynthesis.cancel(); } catch(e){}
+  function textTime(s){ return s.length * 190 + 700; }
+  function next(){
+    clearTimeout(wd); if (stopped) return;
+    if (i >= lines.length){ stopped = true; onDone(); return; }
+    var line = lines[i++]; onLine(line, i - 1);
+    if (!useVoice || /^（.*）/.test(line) && line.length < 9){ wd = setTimeout(next, textTime(line)); return; }
+    try {
+      var u = new SpeechSynthesisUtterance(line.replace(/（[^）]*）/g, '').replace(/[()]/g, '')), started = false, fin = false, t0 = Date.now();
+      u.lang = (voice && voice.lang) || 'zh-TW'; if (voice) u.voice = voice;
+      /* 自然語音本來就比較有語氣，速度放慢、音高不要亂調；男性角色找不到男聲時才壓低音高 */
+      var nat = isNatural(voice);
+      u.rate = nat ? Math.min(1.25, (opt.rate || 1.3) - 0.15) : (opt.rate || 1.35);
+      u.pitch = opt.g === 'm' ? (isMale(voice) ? 1 : 0.72) : (nat ? 1 : (opt.pitch || 1.05));
+      u.onstart = function(){ started = true; };
+      u.onend = u.onerror = function(){
+        if (fin) return; fin = true; clearTimeout(wd);
+        var spent = Date.now() - t0;
+        if (!started || spent < line.length * 60){ useVoice = false; wd = setTimeout(next, Math.max(300, textTime(line) - spent)); }
+        else wd = setTimeout(next, 120);
+      };
+      speechSynthesis.speak(u);
+      wd = setTimeout(function(){
+        if (fin) return;
+        if (!started){ useVoice = false; try { speechSynthesis.cancel(); } catch(e){} fin = true; wd = setTimeout(next, Math.max(300, textTime(line) - 1600)); }
+        else { wd = setTimeout(function(){ if (!fin){ fin = true; next(); } }, line.length * 260 + 1500); }
+      }, 1600);
+    } catch(e){ useVoice = false; wd = setTimeout(next, textTime(line)); }
+  }
+  next();
+  return { stop:function(){ stopped = true; clearTimeout(wd); try { speechSynthesis.cancel(); } catch(e){} } };
+}
+function stopAll(){
+  clearInterval(T.cd); T.cd = null; clearInterval(T.ring); T.ring = null; clearInterval(T.clock); T.clock = null; clearInterval(T.nudge); T.nudge = null;
+  if (T.speech){ T.speech.stop(); T.speech = null; }
+  try { speechSynthesis.cancel(); } catch(e){}
+  vibrate(0);
+}
+
+/* ================================================================
+   首頁／選人／八面玲瓏範本（分頁）
+   ================================================================ */
+var VIEW = { name:'home', id:null, page:0 };
+function topbar(){ return '<header class="topbar"><div class="shell"><button class="logo" data-act="home" aria-label="回首頁"><i>'+ico('chat')+'</i>老師，在嗎？</button></div></header>'; }
+function footer(){ return '<footer class="foot"><div class="shell"><span><b>老師，在嗎？</b>　引路人・教師職場情境遊戲</span><span><a href="'+SITE_URL+'" target="_blank" rel="noopener">引路人網站</a>　·　<a href="'+IG_URL+'" target="_blank" rel="noopener">Instagram</a></span></div></footer>'; }
+function vHome(){
+  return topbar()+
+    '<main><section class="hero dark"><div class="shell hero-grid"><div>'+
+      '<span class="eyebrow">引路人・教師職場情境遊戲</span>'+
+      '<h1>老師，<span>在嗎？</span></h1>'+
+      '<p class="lead">'+ph('下班了，手機還在響。選一個人，把這件事處理完。')+'</p>'+
+      '<div class="how"><span class="how-t">怎麼玩</span><ol class="steps">'+
+        '<li><b>選一個人</b><p>'+ph('家長、主任、同事，各有一件棘手的事，一次只處理一件。')+'</p></li>'+
+        '<li><b>走完 6 回合</b><p>'+ph('每則回覆 '+CFG.reply+' 秒，超時就是已讀不回。每次有三種回法，都有代價：')+'</p><div class="dirs"><span class="dchip o">顧對方</span><span class="dchip s">顧自己</span><span class="dchip p">守原則</span></div></li>'+
+        '<li><b>看結局，再看範本</b><p>'+ph('你的選擇傾向決定結局。玩完看「八面玲瓏」：雙方的內心戲，和比較周全的回法。')+'</p></li>'+
+      '</ol></div>'+
+      '<div class="hero-cta"><button class="btn btn-pri big" data-act="pickView">今晚，你要回誰？'+ico('arrow')+'</button></div>'+
+      '<div class="sound-hint">'+ico('speaker')+'<span>會有人打電話來，建議開聲音或戴耳機</span></div>'+
+    '</div><div class="desk-wrap">'+DESK_SVG+'</div></section></main>'+footer();
+}
+function vPick(){
+  var cards = ORDER.map(function(id){
+    var S0 = SCEN[id], wip = !!S0.wip;
+    return '<article class="who'+(wip ? ' wip' : '')+'">'+(wip ? '<span class="wip-tag">製作中</span>' : '')+
+      '<div class="top"><span class="av">'+avh(S0.av)+'</span><span><span class="role">'+S0.role+'</span><b class="nm">'+S0.name+'</b></span><span class="time">'+(S0.previewTime || '')+'</span></div>'+
+      '<h3>'+S0.title+'</h3><span class="bubble">'+ph(S0.preview)+'</span><p class="teaser">'+ph(S0.teaser)+'</p>'+
+      '<div class="acts">'+(wip
+        ? '<button class="btn btn-sec" disabled>製作中，敬請期待</button>'
+        : '<button class="btn btn-pri" data-act="play" data-id="'+id+'">'+ico('phone')+'接起來</button><button class="btn-text" data-act="tpl" data-id="'+id+'">看八面玲瓏範本'+ico('arrow')+'</button>')+
+      '</div></article>';
+  }).join('');
+  return topbar()+'<main><section class="sec pick"><div class="shell"><button class="btn-text back-link" data-act="home">'+ico('back')+'回首頁</button>'+
+    '<div class="sec-head"><span class="eyebrow">CHOOSE ONE</span><h2>今晚，你要回誰？</h2><p>'+ph('三個人、三件事，各自獨立。每段大約 5 分鐘，結局看你這 6 回合比較常顧誰。')+'</p></div>'+
+    '<div class="cards">'+cards+'</div></div></section></main>'+footer();
+}
+function render(name, id, page){
+  VIEW = { name:name, id:id || null, page:page || 0 };
+  $('site').innerHTML = name === 'pick' ? vPick() : name === 'tpl' ? vTpl(id, VIEW.page) : vHome();
+  window.scrollTo(0, 0);
+}
+function showHome(){ render('home'); }
+function showPick(){ render('pick'); }
+function showTpl(id, page){ render('tpl', id, page); }
+
+function waveBars(){ var s = ''; for (var i = 0; i < 18; i++) s += '<i style="height:'+(30 + ((i * 37) % 70))+'%"></i>'; return s; }
+function tplBubble(it){
+  if (typeof it === 'object' && it.voice) return '<div class="voice"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z"/></svg></span><span class="wave">'+waveBars()+'</span><span class="d">'+it.voice.d+'</span></div><div class="vtext">'+pp(it.voice.text)+'</div>';
+  if (typeof it === 'object' && it.unsend) return ph(it.unsend) + '<br><small style="color:var(--ink3)">（傳出後馬上收回）</small>';
+  return ph(itemText(it));
+}
+function tplRound(S0, i, pk){
+  var R = S0.rounds[i], info = S0.threads[R.th], T0 = R.tpl;
+  var items = (R.items || []).filter(function(it){ return !(typeof it === 'object' && (it.when || it.typing || it.wait || it.div || it.sys)); });
+  var lastName = null;
+  var chat = items.map(function(it){
+    var nm = (typeof it === 'object' && it.from) || info.name, av = (typeof it === 'object' && it.av) || info.av, cont = nm === lastName; lastName = nm;
+    return '<div class="m'+(cont ? ' cont' : '')+'" style="animation:none"><span class="mav">'+avh(av)+'</span><div class="mb">'+(info.group && !cont ? '<span class="snd">'+esc(nm)+'</span>' : '')+'<div class="row"><div class="b">'+tplBubble(it)+'</div></div></div></div>';
+  }).join('');
+  if (R.call) chat += '<div class="tcall"><div class="h">'+ico('phone')+info.name+' 打電話來</div>'+R.call.p1.filter(function(l){ return typeof l === 'string'; }).map(function(l){ return '<p>'+ph('「'+l+'」')+'</p>'; }).join('')+'</div>';
+  var yours = pk ? '<div class="say yours"><small>你剛剛的回法 <span class="dchip '+pk.d+'">'+DIR[pk.d]+'</span></small><p>'+pp(pk.t)+'</p></div>' : '';
+  return '<section class="tr"><div class="tr-head"><span class="rn">第 '+(i + 1)+' 回合</span><span class="rt">'+R.t+'</span><span class="rw"><span class="rav">'+avh(info.av)+'</span>'+info.name+'</span>'+
+      (R.call ? '<span class="tag">來電・插話一次</span>' : '')+(!R.call && i > 0 && R.th !== S0.rounds[i - 1].th ? '<span class="tag">從另一個視窗跳出來</span>' : '')+'</div>'+
+    '<div class="tchat">'+chat+'</div>'+
+    '<div class="lbl">內心戲</div>'+
+    '<div class="thk them"><small>'+esc(T0.who || info.name)+'心裡想</small>'+pp(T0.inner)+'</div>'+
+    '<div class="thk me"><small>老師的真心話</small>'+pp(T0.feel)+'</div>'+
+    '<div class="lbl">'+(R.call ? '插話時可以這樣說' : '可以這樣回')+'</div>'+
+    '<div class="cmp'+(pk ? ' two' : '')+'">'+yours+'<div class="say best"><small>八面玲瓏回法</small><p>'+pp(T0.best)+'</p></div></div>'+
+    '<div class="why">'+['o','p','s'].map(function(d){ return '<div><span class="dchip '+d+'">'+DIR[d]+'</span><span>'+pp(T0.why[d])+'</span></div>'; }).join('')+'</div>'+
+  '</section>';
+}
+function vTpl(id, page){
+  var S0 = SCEN[id], rec = LAST[id], n = S0.rounds.length, last = n + 1;
+  page = Math.max(0, Math.min(last, page || 0));
+  var steps = '<nav class="tsteps" aria-label="範本頁碼">'+
+    '<button class="ts wide'+(page === 0 ? ' on' : '')+'" data-act="tpage" data-p="0">開頭</button>'+
+    S0.rounds.map(function(R, i){ var pk = rec && rec.picks[i]; return '<button class="ts'+(page === i + 1 ? ' on' : '')+(pk ? ' d-' + pk.d : '')+'" data-act="tpage" data-p="'+(i + 1)+'" aria-label="第 '+(i + 1)+' 回合">'+(i + 1)+'</button>'; }).join('')+
+    '<button class="ts wide'+(page === last ? ' on' : '')+'" data-act="tpage" data-p="'+last+'">最後</button></nav>';
+  var body, nav;
+  if (page === 0){
+    var mine = '';
+    if (rec){
+      var E0 = S0.endings[rec.ending];
+      mine = '<div class="mine"><span class="t">你剛剛的結局</span><h3>'+esc(E0.n)+'</h3><div class="dirs">'+
+        ['o','s','p'].map(function(d){ return '<span class="dchip '+d+'">'+DIR[d]+' '+rec.counts[d]+'</span>'; }).join('')+
+        '</div><p class="note2">每一回合都附上「你剛剛的回法」，可以跟八面玲瓏回法對照。上方頁碼的顏色，是你那回合選的方向。</p></div>';
+    }
+    body = '<div class="remind strong"><span class="ic">🪔</span><div><b>先說在前面：做不到很正常</b><p>'+pp(TPL_INTRO)+'</p></div></div>'+mine+
+      '<div class="howread"><b>每一回合一頁，依序是：</b><ol><li>對方傳來的訊息</li><li>對方心裡想的，和老師的真心話</li><li>八面玲瓏回法，以及它怎麼同時顧到三個方向</li></ol></div>';
+    nav = '<div class="tnav one"><button class="btn btn-pri" data-act="tpage" data-p="1">從第 1 回合開始'+ico('arrow')+'</button></div>';
+  } else if (page === last){
+    body = '<div class="remind strong"><span class="ic">🫶</span><div><b>哪有可能每次都這樣回？</b><p>'+pp(TPL_OUTRO)+'</p></div></div>';
+    nav = '<div class="tnav"><button class="btn btn-sec" data-act="home">回首頁</button><button class="btn btn-pri" data-act="play" data-id="'+id+'">'+ico('phone')+(rec ? '再玩一次' : '接起來玩玩看')+'</button></div>'+
+      '<div class="tnav-more"><button class="btn-text" data-act="tpage" data-p="'+n+'">'+ico('back')+'回到第 '+n+' 回合</button><button class="btn-text" data-act="pickView">換一個人</button></div>';
+  } else {
+    body = tplRound(S0, page - 1, rec && rec.picks[page - 1]);
+    nav = '<div class="tnav"><button class="btn btn-sec" data-act="tpage" data-p="'+(page - 1)+'">'+ico('back')+(page === 1 ? '開頭' : '上一回合')+'</button>'+
+      '<button class="btn btn-pri" data-act="tpage" data-p="'+(page + 1)+'">'+(page === n ? '最後' : '下一回合')+ico('arrow')+'</button></div>';
+  }
+  return topbar()+
+    '<main class="tpl-main"><div class="tpl-top"><div class="shell tpl-wrap"><div class="tpl-ttl"><button class="btn-text back-link" data-act="home">'+ico('back')+'回首頁</button>'+
+      '<div><span class="eyebrow">八面玲瓏範本</span><h1>'+esc(S0.title)+'</h1></div></div>'+steps+'</div></div>'+
+    '<section class="tpl-body"><div class="shell tpl-wrap" id="tplBody">'+body+nav+'</div></section></main>'+footer();
+}
+function tplGo(p){
+  if (VIEW.name !== 'tpl') return;
+  var last = SCEN[VIEW.id].rounds.length + 1;
+  if (p < 0 || p > last) return;
+  render('tpl', VIEW.id, p);
+}
+
+/* ================================================================
+   遊戲
+   ================================================================ */
+var G = null;
+
+function startGame(id){
+  audioUnlock();
+  try { var de = document.documentElement; if (de.requestFullscreen && !document.fullscreenElement && matchMedia('(max-width:900px)').matches) de.requestFullscreen().catch(function(){}); } catch(e){}
+  var tok = G ? G.tok + 1 : 1;
+  stopAll(); rm($('endov')); rm($('modal'));
+  G = { id:id, sc:SCEN[id], tok:tok, active:null, last:{}, unread:{}, prev:{}, prevT:{}, r:0, picks:[], counts:{ o:0, s:0, p:0 },
+        choice:null, call:null, voices:[], offset:0, paused:false, lastReply:'', time:'' };
+  document.body.classList.add('playing');
+  var S0 = G.sc, n = S0.bg.length, k = 0, html = '';
+  S0.bg.forEach(function(l, i){
+    if (l === ''){ html += '<span class="gap"></span>'; return; }
+    html += '<p class="'+(i === n - 1 ? 'last' : '')+'" style="animation-delay:'+(0.3 + k * 0.85)+'s">'+ph(l)+'</p>'; k++;
+  });
+  var d = 0.5 + k * 0.85;
+  $('stage').innerHTML = '<div class="bgcard"><div class="bg-in"><span class="when">'+S0.role+'・'+S0.title+'</span>'+html+
+    '<div class="rule" style="animation-delay:'+d+'s"><span>'+ico('layers')+'固定 6 回合</span><span>'+ico('clock')+'每則 '+CFG.reply+' 秒，超時＝已讀不回</span><span>'+ico('speaker')+'會有來電，請開聲音</span></div>'+
+    '<button class="btn btn-pri go" data-act="bgGo" style="animation-delay:'+(d + 0.4)+'s">'+ico('phone')+'拿起手機</button></div></div>';
+}
+function buildPhone(){
+  var S0 = G.sc, feeds = Object.keys(S0.threads).map(function(k){ return '<div class="feed" id="f-'+k+'" hidden aria-live="polite"></div>'; }).join('');
+  var dots = S0.rounds.map(function(){ return '<i></i>'; }).join('');
+  $('stage').innerHTML =
+    '<div class="hud"><button class="hbtn" data-act="exit" aria-label="離開">'+ico('x')+'<span class="t">離開</span></button>'+
+      '<div class="rounds"><span class="rdots" id="rdots">'+dots+'</span><span class="rtxt" id="rtxt"></span></div>'+
+      '<button class="hbtn icon" data-act="snd" id="sndBtn" aria-label="切換聲音">'+ico(AUDIO.on ? 'speaker' : 'mute')+'</button></div>'+
+    '<div class="phone" id="phone"><div class="screen" id="screen">'+
+      '<div class="sbar"><span id="clk">--:--</span><span class="ic">'+ico('signal')+ico('wifi')+ico('battery')+'</span></div>'+
+      '<div class="chead"><button class="back" data-act="back" aria-label="所有對話">'+ico('back')+'<b class="bdot" id="bdot" hidden></b></button><span class="av" id="hav"></span>'+
+        '<span class="nm"><b id="hnm"></b><small id="hsub"></small></span></div>'+
+      '<div class="feeds" id="feeds">'+feeds+'</div>'+
+      '<div class="comp"><div class="tmr" id="tmr" hidden><span class="tb"><i id="tbi"></i></span><b id="tnum">'+CFG.reply+'</b></div>'+
+        '<div class="opts" id="opts" hidden></div>'+
+        '<div class="inbar"><div class="inbox" id="inbox"><span class="ph">輸入訊息</span></div><span class="send" id="sendBtn">'+ico('send')+'</span></div></div>'+
+      '<div class="clist" id="clist" hidden></div>'+
+    '</div></div>';
+  setThread('main');
+  updateHud();
+}
+function updateHud(){
+  var n = G.sc.rounds.length, r = Math.min(G.r, n - 1);
+  var ds = $('rdots'); if (ds) Array.prototype.forEach.call(ds.children, function(d, i){ d.className = i < G.r ? 'done' : (i === G.r && !G.done ? 'cur' : ''); if (G.done) d.className = 'done'; });
+  var t = $('rtxt'); if (t) t.textContent = G.done ? '6 回合結束' : '第 ' + (r + 1) + '／' + n + ' 回合';
+}
+function setThread(th){
+  var S0 = G.sc, info = S0.threads[th];
+  G.active = th; G.unread[th] = 0;
+  Object.keys(S0.threads).forEach(function(k){ var f = $('f-' + k); if (f) f.hidden = k !== th; });
+  $('hav').innerHTML = avh(info.av); $('hnm').textContent = info.name; $('hsub').textContent = info.sub;
+  var b = document.querySelector('.banner'); if (b && b.getAttribute('data-th') === th) rm(b);
+  var cl = $('clist'); if (cl) cl.hidden = true;
+  updateUnread(); renderChoice();
+  var f = $('f-' + th); if (f) f.scrollTop = f.scrollHeight;
+}
+function updateUnread(){
+  var n = 0; Object.keys(G.unread).forEach(function(k){ if (k !== G.active) n += G.unread[k] || 0; });
+  var b = $('bdot'); if (b){ b.hidden = !n; b.textContent = n ? String(n) : ''; }
+}
+function setClock(t, raw){ var v = raw ? t : addMin(t, G.offset); var c = $('clk'); if (c && v) c.textContent = v; G.time = v; }
+function push(th, html, preview){
+  var f = $('f-' + th); if (!f) return null;
+  f.insertAdjacentHTML('beforeend', html);
+  var el = f.lastElementChild;
+  if (preview){ G.prev[th] = preview; G.prevT[th] = G.time; }
+  if (th === G.active) f.scrollTop = f.scrollHeight;
+  else if (preview){ G.unread[th] = (G.unread[th] || 0) + 1; updateUnread(); }
+  return el;
+}
+function senderOf(th, it){
+  var info = G.sc.threads[th];
+  if (it && typeof it === 'object' && it.from) return { name:it.from, av:it.av || '💬', label:true };
+  return { name:info.name, av:info.av, label:false };
+}
+function inHTML(th, text, it){
+  var s0 = senderOf(th, it), cont = G.last[th] === s0.name;
+  G.last[th] = s0.name;
+  return '<div class="m'+(cont ? ' cont' : '')+'"><span class="mav">'+avh(s0.av)+'</span><div class="mb">'+(s0.label && !cont ? '<span class="snd">'+esc(s0.name)+'</span>' : '')+
+    '<div class="row"><div class="b">'+text+'</div><span class="tm">'+(G.time || '')+'</span></div></div></div>';
+}
+function outHTML(text){
+  return '<div class="m out"><div class="mb"><div class="row"><div class="b">'+ph(text)+'</div><span class="tm">'+(G.time || '')+'</span></div><div class="read" hidden>已讀</div></div></div>';
+}
+function showBanner(th, text, sticky){
+  var sc = $('feeds'); if (!sc) return;
+  var info = G.sc.threads[th];
+  rm(sc.querySelector('.banner')); clearTimeout(T.banner);
+  sc.insertAdjacentHTML('beforeend', '<button class="banner'+(sticky ? ' sticky' : '')+'" data-act="openTh" data-th="'+th+'"><span class="av">'+avh(info.av)+'</span><span class="tx"><b>'+esc(info.name)+'</b><span>'+esc(text)+'</span></span><span class="open">點開</span></button>');
+  if (!sticky){ var b = sc.querySelector('.banner'); T.banner = setTimeout(function(){ if (b && b.parentNode && !b.classList.contains('sticky')) rm(b); }, 2600); }
+  sndKey(); buzz(); vibrate(120);
+}
+function typingOn(th, it){
+  var s0 = senderOf(th, it);
+  return push(th, '<div class="m tp'+(G.last[th] === s0.name ? ' cont' : '')+'"><span class="mav">'+avh(s0.av)+'</span><div class="mb"><div class="typing"><i></i><i></i><i></i></div></div></div>');
+}
+function previewOf(it, text){ return (it && typeof it === 'object' && it.from) ? it.from + '：' + text : text; }
+function okWhen(it){
+  if (!it || typeof it !== 'object' || !it.when) return true;
+  var p = G.picks[it.when.r];
+  if (!p || p.d !== it.when.d) return false;
+  if (it.when.to !== undefined && !!p.to !== it.when.to) return false;
+  return true;
+}
+
+/* 播放一則對方的訊息；不在目前視窗時，只跳通知＋紅點 */
+async function playItem(it, tok, th){
+  if (typeof it === 'object' && it.wait){ await wait(it.wait); return alive(tok); }
+  var here = th === G.active;
+  if (typeof it === 'object' && it.div){ setClock(it.div, true); push(th, '<div class="div">'+esc(it.div)+'</div>'); await wait(800); return alive(tok); }
+  if (typeof it === 'object' && it.sys){ push(th, '<div class="sys">'+esc(it.sys)+'</div>'); await wait(900); return alive(tok); }
+  if (typeof it === 'object' && it.typing){
+    if (!here){ await wait(1800); return alive(tok); }
+    var a = typingOn(th, it); await wait(1300); rm(a); if (!alive(tok)) return false;
+    await wait(700); var b = typingOn(th, it); await wait(1100); rm(b); await wait(400); return alive(tok);
+  }
+  if (typeof it === 'object' && it.unsend){
+    var t1 = here ? typingOn(th) : null; await wait(1000); rm(t1); if (!alive(tok)) return false;
+    var el = push(th, inHTML(th, ph(it.unsend)), it.unsend); sndKey(); buzz();
+    if (!here) showBanner(th, it.unsend, false);
+    await wait(1600); if (!alive(tok)) return false;
+    var bb = el && el.querySelector('.b'); if (bb){ bb.classList.add('unsent'); bb.textContent = G.sc.threads[th].name + ' 收回了一則訊息'; }
+    var tm = el && el.querySelector('.tm'); if (tm) tm.textContent = '';
+    G.prev[th] = '收回了一則訊息';
+    await wait(1100); return alive(tok);
+  }
+  if (typeof it === 'object' && it.voice){
+    var t2 = here ? typingOn(th) : null; await wait(1500); rm(t2); if (!alive(tok)) return false;
+    var k = G.voices.length; G.voices.push(it.voice.text);
+    push(th, inHTML(th, '<div class="voice" id="vc'+k+'"><button class="play" data-act="voice" data-k="'+k+'" aria-label="播放語音訊息"><svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z"/></svg></button><span class="wave">'+waveBars()+'</span><span class="d">'+it.voice.d+'</span></div><div class="vhint" id="vh'+k+'">點一下播放</div><div class="vtext" id="vt'+k+'" hidden></div>'), '🎤 語音訊息');
+    sndKey(); buzz(); if (!here) showBanner(th, '傳來一則語音訊息', false);
+    await wait(1700); return alive(tok);
+  }
+  var text = itemText(it), pv = previewOf(it, text);
+  var t3 = here ? typingOn(th, it) : null;
+  await wait(Math.min(1700, Math.max(650, 420 + text.length * 32))); rm(t3); if (!alive(tok)) return false;
+  push(th, inHTML(th, ph(text), it), pv); sndKey(); buzz();
+  if (!here) showBanner(th, pv, false);
+  await wait(Math.min(1500, 600 + text.length * 16));
+  return alive(tok);
+}
+
+/* ---------------- 回合 ---------------- */
+async function runRound(i){
+  var tok = G.tok; if (!alive(tok)) return;
+  G.r = i; updateHud();
+  var R = G.sc.rounds[i];
+  setClock(R.t);
+  var items = (R.items || []).filter(okWhen);
+  for (var k = 0; k < items.length; k++){ if (!(await playItem(items[k], tok, R.th))) return; }
+  if (!alive(tok)) return;
+  if (R.call) return runCall(R, tok);
+  beginChoice(R, tok);
+}
+function beginChoice(R, tok){
+  G.choice = { R:R, tok:tok, order:shuffle([0, 1, 2]), started:false };
+  if (R.th !== G.active){
+    /* 另一個視窗：只跳通知＋紅點，點開才開始倒數；沒點的話每隔一陣子再震一次 */
+    showBanner(R.th, G.prev[R.th] || '傳來新訊息', true);
+    clearInterval(T.nudge);
+    T.nudge = setInterval(function(){
+      if (!alive(tok) || !G.choice || G.choice.started){ clearInterval(T.nudge); T.nudge = null; return; }
+      if (G.paused || G.active === R.th) return;
+      showBanner(R.th, G.prev[R.th] || '傳來新訊息', true);
+    }, 8000);
+  }
+  renderChoice();
+}
+function startChoiceTimer(){
+  var c = G.choice; if (!c || c.started) return;
+  c.started = true; clearInterval(T.nudge); T.nudge = null;
+  $('tmr').hidden = false;
+  startTimer(CFG.reply, { bar:'tbi', num:'tnum', wrap:'tmr' }, function(){ chase(c.R, c.tok); }, function(){ onTimeout(c.tok); });
+}
+function renderChoice(){
+  var box = $('opts'); if (!box) return;
+  var c = G.choice;
+  if (!c){ box.hidden = true; box.innerHTML = ''; return; }
+  var R = c.R;
+  if (G.active === R.th){
+    box.innerHTML = c.order.map(function(k){ return '<button class="opt" data-act="pick" data-k="'+k+'">'+ph(R.opts[k].t)+'</button>'; }).join('');
+    box.hidden = false;
+    startChoiceTimer();
+  } else {
+    var info = G.sc.threads[R.th], n = G.unread[R.th] || 0;
+    box.innerHTML = '<button class="waitbar" data-act="openTh" data-th="'+R.th+'"><span class="av">'+avh(info.av)+'</span><span class="wt"><b>'+esc(info.name)+'</b> 傳來'+(n ? ' ' + n + ' 則' : '')+'新訊息</span><span class="open">點開回覆</span></button>';
+    box.hidden = false;
+  }
+  var f = $('f-' + G.active); if (f) f.scrollTop = f.scrollHeight;
+}
+function startTimer(sec, ids, onChase, onEnd){
+  var total = sec * 1000, left = total, chased = false;
+  clearInterval(T.cd);
+  T.cd = setInterval(function(){
+    if (document.hidden || (G && G.paused)) return;
+    left -= 100;
+    var bar = $(ids.bar), num = $(ids.num), w = $(ids.wrap);
+    if (bar) bar.style.transform = 'scaleX(' + Math.max(0, left / total) + ')';
+    if (num) num.textContent = Math.max(0, Math.ceil(left / 1000));
+    if (w) w.classList.toggle('hot', left <= 5000);
+    if (!chased && left <= CFG.chase * 1000){ chased = true; if (onChase) onChase(); }
+    if (left <= 0){ clearInterval(T.cd); T.cd = null; onEnd(); }
+  }, 100);
+}
+function stopTimer(){
+  clearInterval(T.cd); T.cd = null;
+  var tm = $('tmr'); if (tm){ tm.hidden = true; tm.classList.remove('hot'); }
+  var bar = $('tbi'); if (bar) bar.style.transform = 'scaleX(1)';
+  var num = $('tnum'); if (num) num.textContent = CFG.reply;
+}
+async function chase(R, tok){
+  if (!R.chase || !alive(tok) || !G.choice) return;
+  var th = R.th;
+  if (typeof R.chase === 'object' && R.chase.typing){
+    if (th === G.active){ var a = typingOn(th); await wait(2600); rm(a); }
+    else showBanner(th, '正在輸入…', true);
+    return;
+  }
+  var ct = itemText(R.chase), pv = previewOf(R.chase, ct);
+  push(th, inHTML(th, ph(ct), R.chase), pv); sndKey(); buzz(); vibrate(80);
+  if (th !== G.active){ showBanner(th, pv, true); renderChoice(); }
+}
+function record(d, text, extra){
+  var rec = { d:d, t:text }; if (extra) for (var k in extra) rec[k] = extra[k];
+  G.picks[G.r] = rec; G.counts[d]++;
+}
+async function typeOut(text, tok){
+  var box = $('inbox'), send = $('sendBtn'); if (!box) return;
+  var per = Math.max(9, Math.min(30, 1300 / text.length)), shown = '';
+  send.classList.add('on');
+  for (var i = 0; i < text.length; i++){
+    shown += text[i];
+    if (i % 2 === 0 || i === text.length - 1){ box.innerHTML = esc(shown) + '<span class="caret"></span>'; box.scrollTop = box.scrollHeight; await wait(per * 2); if (!alive(tok)) return; }
+  }
+  await wait(260);
+  box.innerHTML = '<span class="ph">輸入訊息</span>'; send.classList.remove('on'); sndSend();
+}
+async function pick(k){
+  var c = G.choice; if (!c || G.active !== c.R.th) return;
+  G.choice = null; stopTimer(); renderChoice();
+  var tok = c.tok, R = c.R, o = R.opts[k], th = R.th;
+  clearInterval(T.nudge); T.nudge = null; rm(document.querySelector('.banner.sticky'));
+  record(o.d, o.t);
+  await typeOut(o.t, tok); if (!alive(tok)) return;
+  var el = push(th, outHTML(o.t)); G.last[th] = 'me'; G.lastReply = o.t; G.prev[th] = o.t; G.prevT[th] = G.time;
+  setTimeout(function(){ var r = el && el.querySelector('.read'); if (r) r.hidden = false; }, 900);
+  await wait(1100); if (!alive(tok)) return;
+  for (var i = 0; i < o.re.length; i++){ if (!(await playItem(o.re[i], tok, th))) return; }
+  await wait(1000); if (!alive(tok)) return;
+  nextRound();
+}
+async function onTimeout(tok){
+  var c = G.choice; if (!c || !alive(tok)) return;
+  G.choice = null; stopTimer(); renderChoice();
+  var R = c.R, th = R.th;
+  record('s', '（已讀不回）', { to:true });
+  rm(document.querySelector('.banner.sticky'));
+  push(G.active, '<div class="sys">'+CFG.reply+' 秒過去了，你沒有回覆'+(th !== G.active ? G.sc.threads[th].name : '')+'</div>');
+  await wait(1000); if (!alive(tok)) return;
+  for (var i = 0; i < R.timeout.length; i++){ if (!(await playItem(R.timeout[i], tok, th))) return; }
+  await wait(1000); if (!alive(tok)) return;
+  nextRound();
+}
+function nextRound(){
+  if (!G) return;
+  if (G.r + 1 >= G.sc.rounds.length) finish(G.tok);
+  else runRound(G.r + 1);
+}
+
+/* ---------------- 來電（算一回合） ---------------- */
+function runCall(R, tok){
+  var c = R.call, sc = $('screen');
+  G.call = { R:R, c:c, tok:tok, state:'ring', sec:0, jump:0 };
+  rm(sc.querySelector('.banner')); var cl = $('clist'); if (cl) cl.hidden = true;
+  sc.insertAdjacentHTML('beforeend', '<div class="callov ringing" id="callov"><div class="cst" id="cst">來電</div>'+
+    '<div class="cav">'+avh(c.av)+'</div><div class="cnm">'+esc(c.from)+'</div><div class="csub">行動電話</div>'+
+    '<div class="hint">'+ico('speaker')+'有語音也有字幕，沒開聲音也沒關係</div>'+
+    '<div class="ringleft" id="ringleft"></div>'+
+    '<div class="cap" id="cap"></div><div class="cbox" id="cbox"></div>'+
+    '<div class="cbtns one" id="cbtns"><button class="cbtn yes" data-act="callYes"><i>'+ico('phone')+'</i>接聽</button></div></div>');
+  sndRing(); vibrate([500, 300, 500, 300, 500]);
+  T.ring = setInterval(function(){ if (!G || G.paused) return; sndRing(); vibrate([500, 300, 500]); }, 1500);
+  /* 電話一定要接：響越久，提示越明顯 */
+  var t = 0, NUDGE = [[4000, '電話一直響個不停……'], [8000, '看來不接是不行了，點「接聽」吧'], [14000, '它還在響。']];
+  clearInterval(T.cd);
+  T.cd = setInterval(function(){
+    if (document.hidden || (G && G.paused)) return;
+    t += 100;
+    NUDGE.forEach(function(n){ if (t === n[0]){ var rl = $('ringleft'); if (rl){ rl.textContent = n[1]; rl.classList.add('on'); } var ov = $('callov'); if (ov) ov.classList.add('nudge'); } });
+  }, 100);
+}
+function capLine(text, me){
+  var cap = $('cap'); if (!cap) return;
+  Array.prototype.forEach.call(cap.children, function(p){ p.classList.add('old'); });
+  while (cap.children.length > 2) cap.removeChild(cap.firstChild);
+  cap.insertAdjacentHTML('beforeend', '<p'+(me ? ' class="me"' : '')+'>'+ph(text)+'</p>');
+}
+function fmtSec(s){ return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + s % 60).slice(-2); }
+function callTalk(){
+  var C = G.call; if (!C) return;
+  clearInterval(T.cd); T.cd = null; clearInterval(T.ring); T.ring = null; vibrate(0);
+  C.state = 'talk';
+  $('callov').classList.remove('ringing');
+  rm($('ringleft')); $('cbtns').innerHTML = '';
+  $('cst').innerHTML = '通話中 <b>00:00</b>';
+  T.clock = setInterval(function(){ C.sec++; var e = $('cst'); if (e && C.state !== 'end') e.innerHTML = '通話中 <b>'+fmtSec(C.sec)+'</b>'; }, 1000);
+  T.speech = speakLines(C.c.p1.filter(okWhen).map(function(l){ return typeof l === 'string' ? l : l.text; }), C.c.voice, function(line){ capLine(line); }, function(){ callAsk(); });
+}
+function callAsk(){
+  var C = G.call; if (!C || !alive(C.tok)) return;
+  C.state = 'ask'; C.order = shuffle([0, 1, 2]);
+  $('cbox').innerHTML = '<div class="tmr" id="ctmr"><span class="lb">插話</span><span class="tb"><i id="ctbi"></i></span><b id="ctnum">'+CFG.reply+'</b></div>'+
+    C.order.map(function(k){ return '<button class="copt" data-act="cpick" data-k="'+k+'">'+ph(C.c.opts[k].t)+'</button>'; }).join('');
+  startTimer(CFG.reply, { bar:'ctbi', num:'ctnum', wrap:'ctmr' }, null, function(){ callAnswer(-1); });
+}
+async function callAnswer(k){
+  var C = G.call; if (!C || C.state !== 'ask') return;
+  C.state = 'reply'; clearInterval(T.cd); T.cd = null;
+  var tok = C.tok, p2;
+  $('cbox').innerHTML = '';
+  if (k < 0){ record('s', '（電話裡沒說話）', { to:true, call:true }); capLine('（你沒有說話）', true); p2 = C.c.to; }
+  else {
+    var o = C.c.opts[k]; record(o.d, o.t, { call:true });
+    capLine('你：' + o.t, true); G.lastReply = o.t; p2 = o.p2;
+    if (o.dur) C.jump = o.dur;
+  }
+  await wait(900); if (!alive(tok)) return;
+  T.speech = speakLines(p2, C.c.voice, function(line){
+    capLine(line);
+    if (C.jump && /^（.+後）/.test(line)){ C.sec = C.jump * 60 + 12; var e = $('cst'); if (e) e.innerHTML = '通話中 <b>'+fmtSec(C.sec)+'</b>'; }
+  }, function(){ callEnd(false); });
+}
+function callEnd(missed){
+  var C = G.call; if (!C) return;
+  var tok = C.tok, R = C.R; C.state = 'end';
+  clearInterval(T.clock); T.clock = null; clearInterval(T.cd); T.cd = null; clearInterval(T.ring); T.ring = null;
+  if (T.speech){ T.speech.stop(); T.speech = null; }
+  var cst = $('cst'); if (cst) cst.textContent = missed ? (missed === 'rej' ? '已拒接' : '未接來電') : '對方已掛斷';
+  var cb = $('cbtns'); if (cb) cb.innerHTML = ''; rm($('ringleft'));
+  var ov = $('callov'); if (ov) ov.classList.remove('ringing');
+  if (!missed) sndHang();
+  setTimeout(function(){
+    if (!alive(tok)) return;
+    if (ov) ov.classList.add('bye');
+    setTimeout(async function(){
+      rm(ov); if (!alive(tok)) return;
+      G.call = null;
+      if (G.active !== R.th) setThread(R.th);
+      if (C.jump){ G.offset += C.jump; setClock(R.t); }
+      if (missed) push(R.th, '<div class="call-log miss">'+ico('missed')+(missed === 'rej' ? '已拒接・' : '未接來電・')+esc(C.c.from)+'</div>', '📞 未接來電');
+      else push(R.th, '<div class="call-log">'+ico('phone')+'語音通話・'+fmtSec(C.sec)+'</div>', '📞 語音通話');
+      G.last[R.th] = null;
+      await wait(700); if (!alive(tok)) return;
+      if (missed){
+        var missItems = C.c.miss.filter(okWhen);
+        for (var i = 0; i < missItems.length; i++){
+          var it = missItems[i];
+          if (typeof it === 'object'){ if (!(await playItem(it, tok, R.th))) return; continue; }
+          var a = typingOn(R.th); await wait(560); rm(a); if (!alive(tok)) return;
+          push(R.th, inHTML(R.th, ph(it)), it); sndKey(); buzz(); vibrate(90);
+          await wait(620); if (!alive(tok)) return;
+        }
+        await wait(800); if (!alive(tok)) return;
+      }
+      nextRound();
+    }, 450);
+  }, missed ? 700 : 1000);
+}
+function callMiss(rejected){
+  var C = G.call; if (!C || C.state !== 'ring') return;
+  clearInterval(T.cd); T.cd = null; clearInterval(T.ring); T.ring = null; vibrate(0);
+  record('s', rejected ? '（拒接電話）' : '（沒接電話）', { to:!rejected, call:true });
+  callEnd(rejected ? 'rej' : 'miss');
+}
+
+/* ---------------- 結局 ---------------- */
+function endKey(c){
+  if (c.o === 2 && c.s === 2 && c.p === 2) return 'h';
+  var arr = [['o', c.o], ['s', c.s], ['p', c.p]].sort(function(a, b){ return b[1] - a[1]; });
+  if (arr[0][1] - arr[1][1] <= 1) return [arr[0][0], arr[1][0]].sort(function(a, b){ return 'osp'.indexOf(a) - 'osp'.indexOf(b); }).join('');
+  return arr[0][0];
+}
+async function finish(tok){
+  if (!alive(tok)) return;
+  var S0 = G.sc, key = endKey(G.counts), E = S0.endings[key];
+  G.ending = key; G.done = true; updateHud();
+  LAST[G.id] = { picks:G.picks.slice(), counts:{ o:G.counts.o, s:G.counts.s, p:G.counts.p }, ending:key };
+  stopTimer(); renderChoice();
+  await wait(900); if (!alive(tok)) return;
+  if (E.items && E.items.length){
+    var eth = (typeof E.items[0] === 'object' && E.items[0].th) || 'main';
+    if (G.active !== eth) setThread(eth);
+    for (var i = 0; i < E.items.length; i++){ var it = E.items[i]; if (!(await playItem(it, tok, (typeof it === 'object' && it.th) || 'main'))) return; }
+  }
+  await wait(1600); if (!alive(tok)) return;
+  showEnd();
+}
+function showEnd(){
+  var S0 = G.sc, E = S0.endings[G.ending], c = G.counts;
+  var rows = ['o','s','p'].map(function(d){ return '<div class="trow '+d+'"><span>'+DIR[d]+'</span><span class="bar"><i style="width:'+(c[d] / 6 * 100)+'%"></i></span><em>'+c[d]+'</em></div>'; }).join('');
+  document.body.insertAdjacentHTML('beforeend', '<div class="endov" id="endov" role="dialog" aria-label="結局"><div class="endcard">'+
+    (E.hidden ? '<span class="ek hid">隱藏結局・三向平衡</span>' : '<span class="ek">'+S0.role+'・'+S0.title+'</span>')+
+    '<h2>'+esc(E.n)+'</h2><p class="epi">'+pp(E.t)+'</p>'+
+    '<div class="tend"><h4>你這 6 回合的選擇</h4>'+rows+'</div>'+
+    '<div class="end-acts"><button class="btn btn-pri" data-act="tplEnd">看八面玲瓏範本'+ico('arrow')+'</button>'+
+      '<div class="row2"><button class="btn btn-sec" data-act="card">產生結局圖卡</button><button class="btn btn-sec" data-act="again">再玩一次</button></div>'+
+      '<button class="btn-text" data-act="leave">換一個人</button></div></div></div>');
+}
+
+/* ---------------- 結局圖卡 ---------------- */
+function wrapText(ctx, text, maxW){
+  var lines = [], line = '';
+  for (var i = 0; i < text.length; i++){
+    var test = line + text[i];
+    if (ctx.measureText(test).width > maxW && line && '，。、！？」』）…：；'.indexOf(text[i]) < 0){ lines.push(line); line = text[i]; } else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+function rrect(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function loadImg(svg){
+  return new Promise(function(res){
+    if (!svg) return res(null);
+    var im = new Image(); im.onload = function(){ res(im); }; im.onerror = function(){ res(null); };
+    im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    setTimeout(function(){ res(null); }, 1500);
+  });
+}
+async function makeCard(){
+  var S0 = G.sc, E = S0.endings[G.ending], c = G.counts;
+  try {
+    await Promise.race([Promise.all([
+      document.fonts.load('700 80px "LXGW WenKai TC"'), document.fonts.load('400 40px "Noto Sans TC"'),
+      document.fonts.load('700 40px "Noto Sans TC"'), document.fonts.load('500 30px "DM Mono"')]), wait(2500)]);
+  } catch(e){}
+  var W = 1080, H = 1920, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  var x = cv.getContext('2d');
+  var disp = '"LXGW WenKai TC","Kaiti TC",serif', sans = '"Noto Sans TC","PingFang TC",sans-serif', mono = '"DM Mono",monospace';
+  x.fillStyle = '#f7eee2'; x.fillRect(0, 0, W, H);
+  var g = x.createRadialGradient(200, 60, 40, 200, 60, 900); g.addColorStop(0, 'rgba(255,184,104,.75)'); g.addColorStop(1, 'rgba(255,184,104,0)');
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.textBaseline = 'alphabetic';
+  x.fillStyle = '#c96d18'; x.font = '500 30px ' + mono; x.fillText('引路人・教師職場情境遊戲', 90, 150);
+  x.fillStyle = '#4a3326'; x.font = '700 100px ' + disp; x.fillText('老師，在嗎？', 84, 268);
+  x.fillStyle = '#7a5d49'; x.font = '400 38px ' + sans; x.fillText(S0.role + '｜' + S0.title, 90, 336);
+  /* 對話片段（高度依內容） */
+  var py = 396;
+  x.font = '400 38px ' + sans;
+  var q = wrapText(x, S0.cardQuote, 620), qh = q.length * 56 + 44, qy = py + 104;
+  var reply = (G.lastReply || '（已讀不回）');
+  if (reply.length > 54) reply = reply.slice(0, 52) + '……';
+  var r = wrapText(x, reply, 600).slice(0, 3), rh = r.length * 56 + 44, ry = qy + qh + 36;
+  var pb = ry + rh + 48;
+  rrect(x, 70, py, 940, pb - py, 48); x.fillStyle = '#f0e1cd'; x.fill();
+  x.fillStyle = '#a88d77'; x.font = '500 28px ' + mono; x.fillText(S0.rounds[0].t + '　' + S0.name, 120, py + 66);
+  var avImg = await loadImg(avSvgString(S0.av));
+  if (avImg){ try { x.save(); x.beginPath(); x.arc(144, qy + 38, 38, 0, Math.PI * 2); x.clip(); x.drawImage(avImg, 106, qy, 76, 76); x.restore(); } catch(e){} }
+  else { x.font = '60px ' + sans; x.fillText(S0.av, 108, qy + 62); }
+  rrect(x, 196, qy, 690, qh, 36); x.fillStyle = '#fffaf3'; x.fill();
+  x.fillStyle = '#4a3326'; x.font = '400 38px ' + sans; q.forEach(function(l, i){ x.fillText(l, 228, qy + 64 + i * 56); });
+  var rw = Math.min(680, Math.max.apply(null, r.map(function(l){ return x.measureText(l).width; })) + 64);
+  rrect(x, 970 - rw, ry, rw, rh, 36); x.fillStyle = '#ffdcb0'; x.fill();
+  x.fillStyle = '#4a3326'; r.forEach(function(l, i){ x.fillText(l, 970 - rw + 32, ry + 64 + i * 56); });
+  /* 結局 */
+  var ey = pb + 110;
+  x.fillStyle = '#c96d18'; x.font = '700 32px ' + sans; x.fillText(E.hidden ? '隱藏結局・三向平衡' : '我的結局', 90, ey);
+  x.fillStyle = '#4a3326'; x.font = '700 90px ' + disp;
+  var nl = wrapText(x, E.n, 900); nl.forEach(function(l, i){ x.fillText(l, 86, ey + 104 + i * 104); });
+  var ty = ey + 104 + (nl.length - 1) * 104 + 78;
+  x.fillStyle = '#7a5d49'; x.font = '400 36px ' + sans;
+  var el = wrapText(x, E.t, 900), maxL = Math.max(3, Math.floor((1560 - ty) / 58));
+  if (el.length > maxL){ el = el.slice(0, maxL); el[maxL - 1] = el[maxL - 1].slice(0, -1) + '…'; }
+  el.forEach(function(l, i){ x.fillText(l, 90, ty + i * 58); });
+  /* 傾向 */
+  var by = ty + el.length * 58 + 34, cols = { o:'#c8604f', s:'#5f8a55', p:'#4f72a0' };
+  ['o','s','p'].forEach(function(d, i){
+    var bx = 90 + i * 306;
+    rrect(x, bx, by, 282, 74, 37); x.fillStyle = '#fffaf3'; x.fill();
+    x.fillStyle = cols[d]; x.beginPath(); x.arc(bx + 40, by + 37, 10, 0, Math.PI * 2); x.fill();
+    x.font = '700 32px ' + sans; x.fillText(DIR[d], bx + 62, by + 49);
+    x.fillStyle = '#4a3326'; x.font = '500 36px ' + mono; x.textAlign = 'right'; x.fillText(String(c[d]), bx + 252, by + 50); x.textAlign = 'left';
+  });
+  /* 頁尾 */
+  x.strokeStyle = '#e2cdb3'; x.lineWidth = 2; x.beginPath(); x.moveTo(90, 1730); x.lineTo(990, 1730); x.stroke();
+  x.fillStyle = '#4a3326'; x.font = '700 40px ' + sans; x.fillText('你會怎麼回？', 90, 1806);
+  x.fillStyle = '#c96d18'; x.font = '500 34px ' + mono; x.textAlign = 'right'; x.fillText(IG_HANDLE, 990, 1806); x.textAlign = 'left';
+  x.fillStyle = '#a88d77'; x.font = '400 28px ' + sans; x.fillText('引路人', 90, 1856);
+  return cv.toDataURL('image/png');
+}
+async function showCard(){
+  toast('圖卡產生中…');
+  var url = await makeCard();
+  $('toast').classList.remove('on');
+  document.body.insertAdjacentHTML('beforeend', '<div class="cardov" id="cardov"><img src="'+url+'" alt="結局圖卡"><p>長按（或按右鍵）圖片就能儲存，分享到 IG 限動。</p>'+
+    '<div class="row2"><button class="btn btn-sec" data-act="closeCard">關閉</button><a class="btn btn-pri" href="'+url+'" download="老師在嗎-結局.png">下載圖片</a></div></div>');
+}
+
+/* ---------------- 離開 ---------------- */
+function leaveGame(){
+  if (G) G.tok++;
+  stopAll();
+  try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function(){}); } catch(e){}
+  document.body.classList.remove('playing');
+  rm($('endov')); rm($('modal')); rm($('cardov'));
+  $('stage').innerHTML = '';
+  G = null;
+}
+function confirmExit(){
+  if (!G) return;
+  G.paused = true;
+  document.body.insertAdjacentHTML('beforeend', '<div class="modal" id="modal" role="dialog" aria-label="要離開這段對話嗎"><div class="box"><h3>要離開這段對話嗎？</h3>'+
+    '<p>離開後，這次的回合不會保留。對方……應該還會繼續傳。</p>'+
+    '<div class="row2"><button class="btn btn-sec" data-act="exitYes">離開</button><button class="btn btn-pri" data-act="exitNo">繼續回訊息</button></div></div></div>');
+}
+function openList(){
+  if (!G) return;
+  var cl = $('clist'); if (!cl) return;
+  if (!cl.hidden){ cl.hidden = true; return; }
+  var S0 = G.sc;
+  var rows = Object.keys(S0.threads).filter(function(k){ return G.prev[k] || k === G.active; }).map(function(k){
+    var info = S0.threads[k], n = k === G.active ? 0 : (G.unread[k] || 0);
+    return '<button class="crow" data-act="openTh" data-th="'+k+'"><span class="av">'+avh(info.av)+'</span><span class="tx"><b>'+esc(info.name)+'</b><span>'+esc(G.prev[k] || '')+'</span></span><span class="rt">'+(G.prevT[k] || '')+(n ? '<i>'+n+'</i>' : '')+'</span></button>';
+  }).join('');
+  cl.innerHTML = '<div class="ch"><b>聊天</b><button class="hbtn icon x" data-act="back" aria-label="關閉" style="background:var(--cream2);color:var(--ink);border-color:var(--line)">'+ico('x')+'</button></div>'+rows;
+  cl.hidden = false;
+}
+
+/* ================================================================
+   事件
+   ================================================================ */
+document.addEventListener('click', function(ev){
+  var b = ev.target.closest('[data-act]'); if (!b) return;
+  var act = b.getAttribute('data-act'), k = +b.getAttribute('data-k');
+  if (b.classList.contains('btn')){ b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+  switch (act){
+    case 'top': window.scrollTo({ top:0, behavior:'smooth' }); break;
+    case 'home': showHome(); break;
+    case 'pickView': showPick(); break;
+    case 'tpage': tplGo(+b.getAttribute('data-p')); break;
+    case 'closeModal': rm($('modal')); break;
+    case 'play': if (!SCEN[b.getAttribute('data-id')].wip) startGame(b.getAttribute('data-id')); break;
+    case 'tpl': showTpl(b.getAttribute('data-id'), 0); break;
+    case 'bgGo': if (!G || $('phone')) return; buildPhone(); runRound(0); break;
+    case 'pick': pick(k); break;
+    case 'openTh': if (G && G.sc.threads[b.getAttribute('data-th')]){ setThread(b.getAttribute('data-th')); } break;
+    case 'back': openList(); break;
+    case 'callYes': if (G && G.call && G.call.state === 'ring'){ audioUnlock(); callTalk(); } break;
+    
+    case 'cpick': callAnswer(k); break;
+    case 'voice':
+      var text = G && G.voices[k]; if (!text) return;
+      var vc = $('vc' + k), vt = $('vt' + k); rm($('vh' + k));
+      if (vc) vc.classList.add('playing'); if (vt){ vt.hidden = false; vt.textContent = ''; }
+      if (T.speech) T.speech.stop();
+      audioUnlock();
+      T.speech = speakLines(splitSentences(text), { rate:1.35, pitch:1.05 }, function(line){ if (vt) vt.textContent += line; var f = $('f-' + G.active); if (f) f.scrollTop = f.scrollHeight; }, function(){ if (vc) vc.classList.remove('playing'); });
+      break;
+    case 'snd':
+      AUDIO.on = !AUDIO.on; if (AUDIO.on) audioUnlock(); else { try { speechSynthesis.cancel(); } catch(e){} }
+      b.innerHTML = ico(AUDIO.on ? 'speaker' : 'mute'); toast(AUDIO.on ? '聲音已開啟' : '已改成只看字幕'); break;
+    case 'exit': confirmExit(); break;
+    case 'exitNo': rm($('modal')); if (G) G.paused = false; break;
+    case 'exitYes': leaveGame(); showPick(); break;
+    case 'card': if (G && G.ending) showCard(); break;
+    case 'closeCard': rm($('cardov')); break;
+    case 'again': if (G) startGame(G.id); break;
+    case 'tplEnd': if (G){ var id = G.id; leaveGame(); showTpl(id, 0); } break;
+    case 'leave': leaveGame(); showPick(); break;
+  }
+});
+document.addEventListener('keydown', function(ev){
+  if (VIEW.name === 'tpl' && !G && !$('modal')){
+    if (ev.key === 'ArrowRight'){ tplGo(VIEW.page + 1); return; }
+    if (ev.key === 'ArrowLeft'){ tplGo(VIEW.page - 1); return; }
+  }
+  if (ev.key === 'Escape'){
+    if ($('modal')){ var no = document.querySelector('[data-act="exitNo"],[data-act="closeModal"]'); if (no) no.click(); }
+    else if ($('cardov')) rm($('cardov'));
+  }
+});
+try { if (window.speechSynthesis){ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = function(){ speechSynthesis.getVoices(); }; } } catch(e){}
+/* 範本頁：左右滑動換頁 */
+(function(){
+  var sx = 0, sy = 0, on = false;
+  document.addEventListener('touchstart', function(e){ if (VIEW.name !== 'tpl' || G || e.touches.length !== 1) return; on = true; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive:true });
+  document.addEventListener('touchend', function(e){
+    if (!on) return; on = false;
+    var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+    if (Math.abs(dx) > 70 && Math.abs(dy) < 50) tplGo(VIEW.page + (dx < 0 ? 1 : -1));
+  }, { passive:true });
+})();
+showHome();
+
+</script>
+</body>
+</html>
