@@ -146,7 +146,7 @@ body.playing #site{display:none}
 
 /* 背景卡 */
 .bgcard{flex:1;min-height:0;width:100%;display:flex;flex-direction:column;overflow-y:auto;padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px))}
-.bg-in{margin:auto;width:min(460px,100%);background:var(--paper);border-radius:32px;padding:30px 26px 26px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04);position:relative;overflow:hidden}
+.bg-in{flex:none;margin:auto;width:min(460px,100%);background:var(--paper);border-radius:32px;padding:30px 26px 26px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04);position:relative;overflow:hidden}
 .bg-in::before{content:"";position:absolute;left:50%;top:-140px;width:360px;height:260px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,184,104,.5),rgba(255,184,104,0));pointer-events:none}
 .bg-in .when{position:relative;display:inline-block;font-size:13px;font-weight:700;letter-spacing:2px;color:var(--amber-d);background:var(--amber-l);border-radius:999px;padding:3px 12px;margin-bottom:16px}
 .bg-in p{position:relative;font-family:var(--display);font-size:clamp(19px,2.6vw,22px);line-height:1.75;opacity:0;animation:fadeUp .7s var(--ease) both}
