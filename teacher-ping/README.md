@@ -7,7 +7,16 @@
 - 開發期間預覽：[Claude Artifact](https://claude.ai/artifact/Pz4cLnHQLZs6VFku4vczJr)（私人）
 - 製作期間：2026 年 10 月 4–5 日，和 Claude Code 一起完成
 
-> 這個資料夾**不會**自動部署。網站的 `netlify/` 推到 main 會直接上線，所以遊戲放在 `games/` 底下，另外用 Netlify 拖曳上傳。
+> 這個資料夾**不會**自動部署，上線是把 `dist/index.html` 拖到 Netlify。
+
+**想改成自己的版本？** 下載整個資料夾，先改 `src/app.js` 最上面幾行：
+
+- `STATS_URL`：瀏覽計數的網址。**請清空或換成你自己的**，不然會算到原作者的統計裡。
+- `SITE_URL`、`IG_URL`、`IG_HANDLE`：結尾頁的連結，換成你的。
+
+劇本在 `src/data_*.js`，一個情境一個檔。改完照下面的指令重新產生 `dist/`。
+
+授權：CC BY-NC-SA 4.0
 
 ---
 
@@ -30,7 +39,7 @@
 **改完內容後：**
 
 ```bash
-cd games/teacher-ping/src && python3 build.py      # 產生 dist/
+cd teacher-ping/src && python3 build.py      # 產生 dist/
 cd .. && node tests/e2e.mjs                         # 測試（需 playwright）
 ```
 
